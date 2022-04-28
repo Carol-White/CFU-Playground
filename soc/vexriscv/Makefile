@@ -6,6 +6,12 @@ YAMLS    := $(VERILOGS:.v=.yaml)
 
 all: $(VERILOGS)
 
+VexRiscv_Fpu.v: $(SRC) Makefile
+	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 2048 --csrPluginConfig all --cfu false --fpu true --outputFile VexRiscv_Fpu"
+
+VexRiscv_FpuCfu.v: $(SRC) Makefile
+	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 2048 --csrPluginConfig all --cfu true --fpu true --outputFile VexRiscv_FpuCfu"
+
 VexRiscv_Custom.v: $(SRC) Makefile
 	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 2048 --csrPluginConfig all --cfu false --outputFile VexRiscv_Custom"
 
@@ -16,7 +22,7 @@ VexRiscv_dbpl8Cfu.v: $(SRC) Makefile
 	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 2048 --csrPluginConfig all --cfu true --dBytesPerLine 8 --outputFile VexRiscv_dbpl8Cfu"
 
 VexRiscv_HpsCfu.v: $(SRC) Makefile
-	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 2048 --csrPluginConfig mcycle --cfu true --cfuRespReadyAlways false --outputFile VexRiscv_HpsCfu"
+	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 4096 --csrPluginConfig mcycle --cfu true --cfuRespReadyAlways false --outputFile VexRiscv_HpsCfu"
 
 VexRiscv_HpsdeltaCfu.v: $(SRC) Makefile
 	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 4096 --csrPluginConfig mcycle --cfu true --cfuRespReadyAlways false --outputFile VexRiscv_HpsdeltaCfu"
@@ -28,6 +34,9 @@ VexRiscv_rvvLite.v: $(SRC) Makefile
 #================================================================================================
 #======== standard CFU models already being used in CFU Playground.   They now live here. =======
 #================================================================================================
+
+VexRiscv_MinCfu.v: $(SRC)
+	sbt compile "runMain vexriscv.GenCoreDefault --iCacheSize 0 --dCacheSize 0 --csrPluginConfig mcycle --cfu true --mulDiv false --singleCycleShift false --singleCycleMulDiv false --bypass false --prediction none --outputFile VexRiscv_MinCfu"
 
 VexRiscv_PerfCfu.v: $(SRC) Makefile
 	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 8192 --iCacheSize 8192 --csrPluginConfig all --cfu true --perfCSRs 8 --outputFile VexRiscv_PerfCfu"
