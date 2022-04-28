@@ -96,7 +96,8 @@ class HpsSoC(LiteXSoC):
         self.add_cpu(self.cpu_type,
                      variant=variant,
                      reset_address=reset_address,
-                     cfu=cpu_cfu)
+                     cfu=cpu_cfu,
+                     vfu=cpu_vfu)
 
         # RAM
         if separate_arena:
@@ -289,6 +290,7 @@ def main():
                         help="Which synthesis mode to use with Radiant toolchain: "
                         "radiant/synplify (default), lse, or yosys")
     parser.add_argument("--cpu-cfu", default=None, help="Specify file containing CFU Verilog module")
+    parser.add_argument("--cpu-vfu", default=None, help="Specify file containing VFU Verilog module")
     parser.add_argument("--cpu-variant", default=None, help="Which CPU variant to use")
     parser.add_argument("--separate-arena", action="store_true", help="Create separate RAM for tensor arena")
     parser.add_argument("--cfu-mport", action="store_true", help="Create a direct connection between CFU and LRAM")
@@ -313,6 +315,8 @@ def main():
             variant = "slim+cfu+debug" if args.debug else "slim+cfu"
         else:
             variant = "full+cfu+debug" if args.debug else "full+cfu"
+    elif args.cpu_vfu:
+        variant = "rvvLite"
     else:
         variant = "full+debug" if args.debug else "full"
     copy_cpu_variant_if_needed(variant)

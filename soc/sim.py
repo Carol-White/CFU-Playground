@@ -112,6 +112,9 @@ def main():
         newport = []
         for i in range(4):
             newport.append(soc.arena.mem.get_port())
+
+            print(" PLEASE*********************************************************" + str(newport[i]))
+
             soc.specials += newport[i]
 
             p_adr_from_cfu = Signal(14)
