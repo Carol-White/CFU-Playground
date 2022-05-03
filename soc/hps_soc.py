@@ -325,6 +325,7 @@ def main():
                     debug=args.debug,
                     variant=variant,
                     cpu_cfu=args.cpu_cfu,
+                    cpu_vfu=args.cpu_vfu,
                     execute_from_lram=args.execute_from_lram,
                     separate_arena=args.separate_arena,
                     integrated_rom_init=integrated_rom_init,

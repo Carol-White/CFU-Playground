@@ -263,46 +263,51 @@ object GenCoreDefault{
       }
 
       // CFU plugin/port
-      // if(argConfig.cfu) {
-      //   plugins ++= List(
-      //     new CfuPlugin(
-      //       stageCount = 1,
-      //       allowZeroLatency = true,
-      //       encodings = List(
-      //         // CFU R-type
-      //         CfuPluginEncoding (
-      //           instruction = M"-------------------------0001011",
-      //           functionId = List(14 downto 12, 31 downto 25),
-      //           input2Kind = CfuPlugin.Input2Kind.RS
-      //         )
-      //         //,
-      //         // CFU I-type
-      //         //CfuPluginEncoding (
-      //         //  instruction = M"-----------------000-----0101011",
-      //         //  functionId = List(23 downto 20),
-      //         //  input2Kind = CfuPlugin.Input2Kind.IMM_I
-      //         //)
-      //       ),
-      //       busParameter = CfuBusParameter(
-      //         CFU_VERSION = 0,
-      //         CFU_INTERFACE_ID_W = 0,
-      //         CFU_FUNCTION_ID_W = 10,
-      //         CFU_REORDER_ID_W = 0,
-      //         CFU_REQ_RESP_ID_W = 0,
-      //         CFU_STATE_INDEX_NUM = 0,
-      //         CFU_INPUTS = 2,
-      //         CFU_INPUT_DATA_W = 32,
-      //         CFU_OUTPUTS = 1,
-      //         CFU_OUTPUT_DATA_W = 32,
-      //         CFU_FLOW_REQ_READY_ALWAYS = false,
-      //         CFU_FLOW_RESP_READY_ALWAYS = argConfig.cfuRespReadyAlways
-      //       )
-      //     )
-      //   )
-      // }
+      if(argConfig.cfu) {
+        plugins ++= List(
+          new CfuPlugin(
+            stageCount = 1,
+            allowZeroLatency = true,
+            encodings = List(
+              // CFU R-type
+              CfuPluginEncoding (
+                instruction = M"-------------------------0001011",
+                functionId = List(14 downto 12, 31 downto 25),
+                input2Kind = CfuPlugin.Input2Kind.RS
+              )
+              //,
+              // CFU I-type
+              //CfuPluginEncoding (
+              //  instruction = M"-----------------000-----0101011",
+              //  functionId = List(23 downto 20),
+              //  input2Kind = CfuPlugin.Input2Kind.IMM_I
+              //)
+            ),
+            busParameter = CfuBusParameter(
+              CFU_VERSION = 0,
+              CFU_INTERFACE_ID_W = 0,
+              CFU_FUNCTION_ID_W = 10,
+              CFU_REORDER_ID_W = 0,
+              CFU_REQ_RESP_ID_W = 0,
+              CFU_STATE_INDEX_NUM = 0,
+              CFU_INPUTS = 2,
+              CFU_INPUT_DATA_W = 32,
+              CFU_OUTPUTS = 1,
+              CFU_OUTPUT_DATA_W = 32,
+              CFU_FLOW_REQ_READY_ALWAYS = false,
+              CFU_FLOW_RESP_READY_ALWAYS = argConfig.cfuRespReadyAlways
+            )
+          )
+        )
+      }
 
       if(argConfig.rvvLite) {
         plugins ++= List(
+          new VfuPlugin(
+            stageCount = 1,
+            allowZeroLatency = false,
+            parameter = VfuParameter()
+          )
           // new VfuPlugin(
           //   stageCount = 1,
           //   allowZeroLatency = true,
@@ -372,11 +377,6 @@ object GenCoreDefault{
           //     CFU_FLOW_RESP_READY_ALWAYS = argConfig.cfuRespReadyAlways
           //   )
           // )
-          new VfuPlugin(
-            stageCount = 2,
-            allowZeroLatency = false,
-            parameter = VfuParameter()
-          )
         )
       }
 

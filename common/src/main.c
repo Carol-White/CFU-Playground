@@ -24,6 +24,7 @@
 #include "benchmarks.h"
 #include "fb_util.h"
 #include "functional_cfu_tests.h"
+#include "functional_rvv_tests.h"
 #include "instruction_handler.h"
 #include "menu.h"
 #include "models/models.h"
@@ -49,7 +50,7 @@ static struct Menu MENU = {
     "main",
     {
         MENU_ITEM('1', "TfLM Models menu", models_menu),
-        MENU_ITEM('2', "Functional CFU Tests", do_functional_cfu_tests),
+        MENU_ITEM('2', "Functional RVVLite Tests", do_functional_rvv_tests),
         MENU_ITEM('3', "Project menu", do_proj_menu),
         MENU_ITEM('4', "Performance Counter Tests", perf_test_menu),
         MENU_ITEM('5', "TFLite Unit Tests", tflite_do_tests),

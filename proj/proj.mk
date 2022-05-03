@@ -351,6 +351,7 @@ endif
 else
 # $(PLATFORM) == 'sim'
 load: $(CFU_VERILOG) $(SOFTWARE_BIN)
+	@echo Just proving that we make it here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	$(SIM_MK) run
 
 unit: $(SOFTWARE_BIN)

@@ -34,7 +34,7 @@ endif
 
 PROJ_DIR:=  $(CFU_ROOT)/proj/$(PROJ)
 CFU_V:=     $(if $(wildcard $(PROJ_DIR)/cfu.sv),$(PROJ_DIR)/cfu.sv,$(if $(wildcard $(PROJ_DIR)/vfu.v),$(PROJ_DIR)/vfu.v,$(PROJ_DIR)/cfu.v))
-CFU_ARGS:=  --cpu-cfu $(CFU_V)
+CFU_ARGS:=  $(if $(wildcard $(PROJ_DIR)/vfu.v), --cpu-vfu, --cpu-cfu) $(CFU_V)
 
 SOC_NAME:=  sim.$(PROJ)
 OUT_DIR:=   build/$(SOC_NAME)
@@ -53,6 +53,7 @@ BIOS_BIN := $(OUT_DIR)/software/bios/bios.bin
 litex-software: $(BIOS_BIN)
 
 run: $(BITSTREAM)
+	@echo LITEX_ARGS=$(LITEX_ARGS)
 	$(SIM_RUN) --run
 	
 clean:
