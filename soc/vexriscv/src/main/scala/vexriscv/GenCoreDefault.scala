@@ -304,8 +304,8 @@ object GenCoreDefault{
       if(argConfig.rvvLite) {
         plugins ++= List(
           new VfuPlugin(
-            stageCount = 1,
-            allowZeroLatency = false,
+            stageCount = 2,
+            allowZeroLatency = true,
             parameter = VfuParameter()
           )
           // new VfuPlugin(

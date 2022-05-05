@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.6.0    git head : 73c8d8e2b86b45646e9d0b2e729291f2b65e6be3
 // Component : VexRiscv
-// Git hash  : 42fb47745c21e80e8e1958a575f9ee75dbfe48e5
+// Git hash  : ca063edee58c47bcd43f64cb5efde85e54d5188d
 
 
 `define EnvCtrlEnum_binary_sequential_type [1:0]
@@ -335,36 +335,37 @@ module VexRiscv (
   wire       [5:0]    _zz__zz_decode_VFU_ENABLE_133;
   wire                _zz__zz_decode_VFU_ENABLE_134;
   wire       [0:0]    _zz__zz_decode_VFU_ENABLE_135;
-  wire       [3:0]    _zz__zz_decode_VFU_ENABLE_136;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_137;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_136;
+  wire       [3:0]    _zz__zz_decode_VFU_ENABLE_137;
   wire       [31:0]   _zz__zz_decode_VFU_ENABLE_138;
-  wire                _zz__zz_decode_VFU_ENABLE_139;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_140;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_141;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_142;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_143;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_144;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_139;
+  wire                _zz__zz_decode_VFU_ENABLE_140;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_141;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_142;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_143;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_144;
   wire       [0:0]    _zz__zz_decode_VFU_ENABLE_145;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_146;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_147;
-  wire       [3:0]    _zz__zz_decode_VFU_ENABLE_148;
-  wire                _zz__zz_decode_VFU_ENABLE_149;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_150;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_151;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_152;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_153;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_154;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_146;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_147;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_148;
+  wire       [3:0]    _zz__zz_decode_VFU_ENABLE_149;
+  wire                _zz__zz_decode_VFU_ENABLE_150;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_151;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_152;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_153;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_154;
   wire       [0:0]    _zz__zz_decode_VFU_ENABLE_155;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_156;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_157;
-  wire       [1:0]    _zz__zz_decode_VFU_ENABLE_158;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_156;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_157;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_158;
   wire       [1:0]    _zz__zz_decode_VFU_ENABLE_159;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_160;
+  wire       [1:0]    _zz__zz_decode_VFU_ENABLE_160;
   wire       [31:0]   _zz__zz_decode_VFU_ENABLE_161;
-  wire       [1:0]    _zz__zz_decode_VFU_ENABLE_162;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_163;
-  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_164;
-  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_165;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_162;
+  wire       [1:0]    _zz__zz_decode_VFU_ENABLE_163;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_164;
+  wire       [31:0]   _zz__zz_decode_VFU_ENABLE_165;
+  wire       [0:0]    _zz__zz_decode_VFU_ENABLE_166;
   wire                _zz_RegFilePlugin_regFile_port;
   wire                _zz_decode_RegFilePlugin_rs1Data;
   wire                _zz_RegFilePlugin_regFile_port_1;
@@ -1136,17 +1137,19 @@ module VexRiscv (
   wire                execute_VfuPlugin_hazard;
   wire                execute_VfuPlugin_scheduleWish;
   wire                execute_VfuPlugin_schedule;
-  wire                when_VfuPlugin_l124;
+  wire                when_VfuPlugin_l136;
   reg                 execute_VfuPlugin_hold;
   reg                 execute_VfuPlugin_fired;
   wire                VfuPlugin_bus_cmd_fire;
-  wire                when_VfuPlugin_l127;
-  wire                when_VfuPlugin_l131;
-  wire                writeBack_VfuPlugin_rsp_valid;
-  reg                 writeBack_VfuPlugin_rsp_ready;
-  wire       [31:0]   writeBack_VfuPlugin_rsp_payload_output;
-  wire                when_VfuPlugin_l149;
-  wire                when_VfuPlugin_l150;
+  wire                when_VfuPlugin_l139;
+  wire                when_VfuPlugin_l143;
+  wire                VfuPlugin_bus_rsp_rsp_valid;
+  reg                 VfuPlugin_bus_rsp_rsp_ready;
+  wire       [31:0]   VfuPlugin_bus_rsp_rsp_payload_output;
+  reg                 VfuPlugin_bus_rsp_rValid;
+  reg        [31:0]   VfuPlugin_bus_rsp_rData_output;
+  wire                when_VfuPlugin_l161;
+  wire                when_VfuPlugin_l162;
   wire                when_Pipeline_l124;
   reg        [31:0]   decode_to_execute_PC;
   wire                when_Pipeline_l124_1;
@@ -1582,7 +1585,7 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_25 = 32'h40001010;
   assign _zz__zz_decode_VFU_ENABLE_26 = ((decode_INSTRUCTION & 32'h00007034) == 32'h00001010);
   assign _zz__zz_decode_VFU_ENABLE_27 = ((decode_INSTRUCTION & 32'h02007054) == 32'h00001010);
-  assign _zz__zz_decode_VFU_ENABLE_30 = (decode_INSTRUCTION & 32'h00000034);
+  assign _zz__zz_decode_VFU_ENABLE_30 = (decode_INSTRUCTION & 32'h00000074);
   assign _zz__zz_decode_VFU_ENABLE_31 = 32'h00000034;
   assign _zz__zz_decode_VFU_ENABLE_33 = ((decode_INSTRUCTION & 32'h00001000) == 32'h00001000);
   assign _zz__zz_decode_VFU_ENABLE_35 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_36) == 32'h00002000);
@@ -1594,14 +1597,14 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_39 = ((decode_INSTRUCTION & 32'h00002010) == 32'h00002000);
   assign _zz__zz_decode_VFU_ENABLE_40 = ((decode_INSTRUCTION & 32'h00005000) == 32'h00001000);
   assign _zz__zz_decode_VFU_ENABLE_42 = ((decode_INSTRUCTION & 32'h00004048) == 32'h00004008);
-  assign _zz__zz_decode_VFU_ENABLE_44 = {_zz_decode_VFU_ENABLE_3,{_zz__zz_decode_VFU_ENABLE_45,{_zz__zz_decode_VFU_ENABLE_47,_zz__zz_decode_VFU_ENABLE_50}}};
+  assign _zz__zz_decode_VFU_ENABLE_44 = {_zz_decode_VFU_ENABLE_6,{_zz__zz_decode_VFU_ENABLE_45,{_zz__zz_decode_VFU_ENABLE_47,_zz__zz_decode_VFU_ENABLE_50}}};
   assign _zz__zz_decode_VFU_ENABLE_51 = 4'b0000;
   assign _zz__zz_decode_VFU_ENABLE_52 = ({_zz__zz_decode_VFU_ENABLE_53,{_zz__zz_decode_VFU_ENABLE_55,_zz__zz_decode_VFU_ENABLE_58}} != 5'h0);
   assign _zz__zz_decode_VFU_ENABLE_67 = (_zz__zz_decode_VFU_ENABLE_68 != 1'b0);
   assign _zz__zz_decode_VFU_ENABLE_70 = {(_zz__zz_decode_VFU_ENABLE_71 != _zz__zz_decode_VFU_ENABLE_82),{_zz__zz_decode_VFU_ENABLE_83,{_zz__zz_decode_VFU_ENABLE_96,_zz__zz_decode_VFU_ENABLE_113}}};
   assign _zz__zz_decode_VFU_ENABLE_45 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_46) == 32'h00000020);
   assign _zz__zz_decode_VFU_ENABLE_47 = (_zz__zz_decode_VFU_ENABLE_48 == _zz__zz_decode_VFU_ENABLE_49);
-  assign _zz__zz_decode_VFU_ENABLE_50 = _zz_decode_VFU_ENABLE_6;
+  assign _zz__zz_decode_VFU_ENABLE_50 = _zz_decode_VFU_ENABLE_5;
   assign _zz__zz_decode_VFU_ENABLE_53 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_54) == 32'h00000040);
   assign _zz__zz_decode_VFU_ENABLE_55 = (_zz__zz_decode_VFU_ENABLE_56 == _zz__zz_decode_VFU_ENABLE_57);
   assign _zz__zz_decode_VFU_ENABLE_58 = {_zz__zz_decode_VFU_ENABLE_59,{_zz__zz_decode_VFU_ENABLE_61,_zz__zz_decode_VFU_ENABLE_64}};
@@ -1622,8 +1625,8 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_64 = (_zz__zz_decode_VFU_ENABLE_65 == _zz__zz_decode_VFU_ENABLE_66);
   assign _zz__zz_decode_VFU_ENABLE_69 = 32'h00000020;
   assign _zz__zz_decode_VFU_ENABLE_72 = (_zz__zz_decode_VFU_ENABLE_73 == _zz__zz_decode_VFU_ENABLE_74);
-  assign _zz__zz_decode_VFU_ENABLE_75 = {_zz_decode_VFU_ENABLE_5,{_zz__zz_decode_VFU_ENABLE_76,_zz__zz_decode_VFU_ENABLE_79}};
-  assign _zz__zz_decode_VFU_ENABLE_84 = _zz_decode_VFU_ENABLE_5;
+  assign _zz__zz_decode_VFU_ENABLE_75 = {_zz_decode_VFU_ENABLE_4,{_zz__zz_decode_VFU_ENABLE_76,_zz__zz_decode_VFU_ENABLE_79}};
+  assign _zz__zz_decode_VFU_ENABLE_84 = _zz_decode_VFU_ENABLE_4;
   assign _zz__zz_decode_VFU_ENABLE_85 = {_zz__zz_decode_VFU_ENABLE_86,{_zz__zz_decode_VFU_ENABLE_88,_zz__zz_decode_VFU_ENABLE_91}};
   assign _zz__zz_decode_VFU_ENABLE_97 = {_zz__zz_decode_VFU_ENABLE_98,{_zz__zz_decode_VFU_ENABLE_100,_zz__zz_decode_VFU_ENABLE_103}};
   assign _zz__zz_decode_VFU_ENABLE_112 = 6'h0;
@@ -1645,13 +1648,13 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_98 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_99) == 32'h00000048);
   assign _zz__zz_decode_VFU_ENABLE_100 = (_zz__zz_decode_VFU_ENABLE_101 == _zz__zz_decode_VFU_ENABLE_102);
   assign _zz__zz_decode_VFU_ENABLE_103 = {_zz__zz_decode_VFU_ENABLE_104,{_zz__zz_decode_VFU_ENABLE_106,_zz__zz_decode_VFU_ENABLE_109}};
-  assign _zz__zz_decode_VFU_ENABLE_115 = _zz_decode_VFU_ENABLE_4;
+  assign _zz__zz_decode_VFU_ENABLE_115 = _zz_decode_VFU_ENABLE_3;
   assign _zz__zz_decode_VFU_ENABLE_116 = (_zz__zz_decode_VFU_ENABLE_117 == _zz__zz_decode_VFU_ENABLE_118);
-  assign _zz__zz_decode_VFU_ENABLE_120 = {_zz_decode_VFU_ENABLE_4,_zz__zz_decode_VFU_ENABLE_121};
+  assign _zz__zz_decode_VFU_ENABLE_120 = {_zz_decode_VFU_ENABLE_3,_zz__zz_decode_VFU_ENABLE_121};
   assign _zz__zz_decode_VFU_ENABLE_123 = 2'b00;
   assign _zz__zz_decode_VFU_ENABLE_125 = (_zz__zz_decode_VFU_ENABLE_126 != 1'b0);
   assign _zz__zz_decode_VFU_ENABLE_128 = (_zz__zz_decode_VFU_ENABLE_129 != _zz__zz_decode_VFU_ENABLE_132);
-  assign _zz__zz_decode_VFU_ENABLE_133 = {_zz__zz_decode_VFU_ENABLE_134,{_zz__zz_decode_VFU_ENABLE_144,_zz__zz_decode_VFU_ENABLE_148}};
+  assign _zz__zz_decode_VFU_ENABLE_133 = {_zz__zz_decode_VFU_ENABLE_134,{_zz__zz_decode_VFU_ENABLE_145,_zz__zz_decode_VFU_ENABLE_149}};
   assign _zz__zz_decode_VFU_ENABLE_77 = (decode_INSTRUCTION & 32'h00000070);
   assign _zz__zz_decode_VFU_ENABLE_78 = 32'h00000010;
   assign _zz__zz_decode_VFU_ENABLE_80 = (decode_INSTRUCTION & 32'h02000024);
@@ -1673,9 +1676,9 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_126 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_127) == 32'h00004010);
   assign _zz__zz_decode_VFU_ENABLE_129 = (_zz__zz_decode_VFU_ENABLE_130 == _zz__zz_decode_VFU_ENABLE_131);
   assign _zz__zz_decode_VFU_ENABLE_132 = 1'b0;
-  assign _zz__zz_decode_VFU_ENABLE_134 = ({_zz__zz_decode_VFU_ENABLE_135,_zz__zz_decode_VFU_ENABLE_136} != 5'h0);
-  assign _zz__zz_decode_VFU_ENABLE_144 = (_zz__zz_decode_VFU_ENABLE_145 != _zz__zz_decode_VFU_ENABLE_147);
-  assign _zz__zz_decode_VFU_ENABLE_148 = {_zz__zz_decode_VFU_ENABLE_149,{_zz__zz_decode_VFU_ENABLE_154,_zz__zz_decode_VFU_ENABLE_158}};
+  assign _zz__zz_decode_VFU_ENABLE_134 = ({_zz__zz_decode_VFU_ENABLE_135,_zz__zz_decode_VFU_ENABLE_137} != 5'h0);
+  assign _zz__zz_decode_VFU_ENABLE_145 = (_zz__zz_decode_VFU_ENABLE_146 != _zz__zz_decode_VFU_ENABLE_148);
+  assign _zz__zz_decode_VFU_ENABLE_149 = {_zz__zz_decode_VFU_ENABLE_150,{_zz__zz_decode_VFU_ENABLE_155,_zz__zz_decode_VFU_ENABLE_159}};
   assign _zz__zz_decode_VFU_ENABLE_93 = 32'h02002064;
   assign _zz__zz_decode_VFU_ENABLE_95 = 32'h02001064;
   assign _zz__zz_decode_VFU_ENABLE_105 = 32'h00002010;
@@ -1687,35 +1690,36 @@ module VexRiscv (
   assign _zz__zz_decode_VFU_ENABLE_127 = 32'h00004014;
   assign _zz__zz_decode_VFU_ENABLE_130 = (decode_INSTRUCTION & 32'h00006014);
   assign _zz__zz_decode_VFU_ENABLE_131 = 32'h00002010;
-  assign _zz__zz_decode_VFU_ENABLE_135 = _zz_decode_VFU_ENABLE_3;
-  assign _zz__zz_decode_VFU_ENABLE_136 = {(_zz__zz_decode_VFU_ENABLE_137 == _zz__zz_decode_VFU_ENABLE_138),{_zz__zz_decode_VFU_ENABLE_139,{_zz__zz_decode_VFU_ENABLE_140,_zz__zz_decode_VFU_ENABLE_142}}};
-  assign _zz__zz_decode_VFU_ENABLE_145 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_146) == 32'h0);
-  assign _zz__zz_decode_VFU_ENABLE_147 = 1'b0;
-  assign _zz__zz_decode_VFU_ENABLE_149 = ({_zz_decode_VFU_ENABLE_2,{_zz__zz_decode_VFU_ENABLE_150,_zz__zz_decode_VFU_ENABLE_152}} != 3'b000);
-  assign _zz__zz_decode_VFU_ENABLE_154 = ({_zz__zz_decode_VFU_ENABLE_155,_zz__zz_decode_VFU_ENABLE_157} != 2'b00);
-  assign _zz__zz_decode_VFU_ENABLE_158 = {(_zz__zz_decode_VFU_ENABLE_159 != _zz__zz_decode_VFU_ENABLE_162),(_zz__zz_decode_VFU_ENABLE_163 != _zz__zz_decode_VFU_ENABLE_165)};
-  assign _zz__zz_decode_VFU_ENABLE_137 = (decode_INSTRUCTION & 32'h00000044);
-  assign _zz__zz_decode_VFU_ENABLE_138 = 32'h0;
-  assign _zz__zz_decode_VFU_ENABLE_139 = ((decode_INSTRUCTION & 32'h00000018) == 32'h0);
-  assign _zz__zz_decode_VFU_ENABLE_140 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_141) == 32'h00002000);
-  assign _zz__zz_decode_VFU_ENABLE_142 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_143) == 32'h00001000);
-  assign _zz__zz_decode_VFU_ENABLE_146 = 32'h00000054;
-  assign _zz__zz_decode_VFU_ENABLE_150 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_151) == 32'h00002010);
-  assign _zz__zz_decode_VFU_ENABLE_152 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_153) == 32'h40000030);
-  assign _zz__zz_decode_VFU_ENABLE_155 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_156) == 32'h00000004);
-  assign _zz__zz_decode_VFU_ENABLE_157 = _zz_decode_VFU_ENABLE_1;
-  assign _zz__zz_decode_VFU_ENABLE_159 = {(_zz__zz_decode_VFU_ENABLE_160 == _zz__zz_decode_VFU_ENABLE_161),_zz_decode_VFU_ENABLE_1};
-  assign _zz__zz_decode_VFU_ENABLE_162 = 2'b00;
-  assign _zz__zz_decode_VFU_ENABLE_163 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_164) == 32'h00001008);
-  assign _zz__zz_decode_VFU_ENABLE_165 = 1'b0;
-  assign _zz__zz_decode_VFU_ENABLE_141 = 32'h00006004;
-  assign _zz__zz_decode_VFU_ENABLE_143 = 32'h00005004;
-  assign _zz__zz_decode_VFU_ENABLE_151 = 32'h00002014;
-  assign _zz__zz_decode_VFU_ENABLE_153 = 32'h40000034;
-  assign _zz__zz_decode_VFU_ENABLE_156 = 32'h00000014;
-  assign _zz__zz_decode_VFU_ENABLE_160 = (decode_INSTRUCTION & 32'h00000044);
-  assign _zz__zz_decode_VFU_ENABLE_161 = 32'h00000004;
-  assign _zz__zz_decode_VFU_ENABLE_164 = 32'h00005048;
+  assign _zz__zz_decode_VFU_ENABLE_135 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_136) == 32'h00000040);
+  assign _zz__zz_decode_VFU_ENABLE_137 = {(_zz__zz_decode_VFU_ENABLE_138 == _zz__zz_decode_VFU_ENABLE_139),{_zz__zz_decode_VFU_ENABLE_140,{_zz__zz_decode_VFU_ENABLE_141,_zz__zz_decode_VFU_ENABLE_143}}};
+  assign _zz__zz_decode_VFU_ENABLE_146 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_147) == 32'h0);
+  assign _zz__zz_decode_VFU_ENABLE_148 = 1'b0;
+  assign _zz__zz_decode_VFU_ENABLE_150 = ({_zz_decode_VFU_ENABLE_2,{_zz__zz_decode_VFU_ENABLE_151,_zz__zz_decode_VFU_ENABLE_153}} != 3'b000);
+  assign _zz__zz_decode_VFU_ENABLE_155 = ({_zz__zz_decode_VFU_ENABLE_156,_zz__zz_decode_VFU_ENABLE_158} != 2'b00);
+  assign _zz__zz_decode_VFU_ENABLE_159 = {(_zz__zz_decode_VFU_ENABLE_160 != _zz__zz_decode_VFU_ENABLE_163),(_zz__zz_decode_VFU_ENABLE_164 != _zz__zz_decode_VFU_ENABLE_166)};
+  assign _zz__zz_decode_VFU_ENABLE_136 = 32'h00000060;
+  assign _zz__zz_decode_VFU_ENABLE_138 = (decode_INSTRUCTION & 32'h00000044);
+  assign _zz__zz_decode_VFU_ENABLE_139 = 32'h0;
+  assign _zz__zz_decode_VFU_ENABLE_140 = ((decode_INSTRUCTION & 32'h00000018) == 32'h0);
+  assign _zz__zz_decode_VFU_ENABLE_141 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_142) == 32'h00002000);
+  assign _zz__zz_decode_VFU_ENABLE_143 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_144) == 32'h00001000);
+  assign _zz__zz_decode_VFU_ENABLE_147 = 32'h00000054;
+  assign _zz__zz_decode_VFU_ENABLE_151 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_152) == 32'h00002010);
+  assign _zz__zz_decode_VFU_ENABLE_153 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_154) == 32'h40000030);
+  assign _zz__zz_decode_VFU_ENABLE_156 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_157) == 32'h00000004);
+  assign _zz__zz_decode_VFU_ENABLE_158 = _zz_decode_VFU_ENABLE_1;
+  assign _zz__zz_decode_VFU_ENABLE_160 = {(_zz__zz_decode_VFU_ENABLE_161 == _zz__zz_decode_VFU_ENABLE_162),_zz_decode_VFU_ENABLE_1};
+  assign _zz__zz_decode_VFU_ENABLE_163 = 2'b00;
+  assign _zz__zz_decode_VFU_ENABLE_164 = ((decode_INSTRUCTION & _zz__zz_decode_VFU_ENABLE_165) == 32'h00001008);
+  assign _zz__zz_decode_VFU_ENABLE_166 = 1'b0;
+  assign _zz__zz_decode_VFU_ENABLE_142 = 32'h00006004;
+  assign _zz__zz_decode_VFU_ENABLE_144 = 32'h00005004;
+  assign _zz__zz_decode_VFU_ENABLE_152 = 32'h00002014;
+  assign _zz__zz_decode_VFU_ENABLE_154 = 32'h40000034;
+  assign _zz__zz_decode_VFU_ENABLE_157 = 32'h00000014;
+  assign _zz__zz_decode_VFU_ENABLE_161 = (decode_INSTRUCTION & 32'h00000044);
+  assign _zz__zz_decode_VFU_ENABLE_162 = 32'h00000004;
+  assign _zz__zz_decode_VFU_ENABLE_165 = 32'h00005048;
   assign _zz_execute_BranchPlugin_branch_src2_6 = execute_INSTRUCTION[31];
   assign _zz_execute_BranchPlugin_branch_src2_7 = execute_INSTRUCTION[31];
   assign _zz_execute_BranchPlugin_branch_src2_8 = execute_INSTRUCTION[7];
@@ -2800,7 +2804,7 @@ module VexRiscv (
     end
   end
 
-  assign decode_LEGAL_INSTRUCTION = ({((decode_INSTRUCTION & 32'h0000004f) == 32'h00000007),{((decode_INSTRUCTION & 32'h0000003f) == 32'h00000017),{((decode_INSTRUCTION & 32'h0000007f) == 32'h0000006f),{((decode_INSTRUCTION & _zz_decode_LEGAL_INSTRUCTION) == 32'h00000003),{(_zz_decode_LEGAL_INSTRUCTION_1 == _zz_decode_LEGAL_INSTRUCTION_2),{_zz_decode_LEGAL_INSTRUCTION_3,{_zz_decode_LEGAL_INSTRUCTION_4,_zz_decode_LEGAL_INSTRUCTION_5}}}}}}} != 22'h0);
+  assign decode_LEGAL_INSTRUCTION = ({((decode_INSTRUCTION & 32'h0000001f) == 32'h00000017),{((decode_INSTRUCTION & 32'h0000004f) == 32'h00000007),{((decode_INSTRUCTION & 32'h0000007f) == 32'h0000006f),{((decode_INSTRUCTION & _zz_decode_LEGAL_INSTRUCTION) == 32'h00000003),{(_zz_decode_LEGAL_INSTRUCTION_1 == _zz_decode_LEGAL_INSTRUCTION_2),{_zz_decode_LEGAL_INSTRUCTION_3,{_zz_decode_LEGAL_INSTRUCTION_4,_zz_decode_LEGAL_INSTRUCTION_5}}}}}}} != 22'h0);
   always @(*) begin
     _zz_decode_RS2_2 = writeBack_REGFILE_WRITE_DATA;
     if(when_DBusCachedPlugin_l484) begin
@@ -2816,7 +2820,7 @@ module VexRiscv (
         end
       endcase
     end
-    if(when_VfuPlugin_l149) begin
+    if(when_VfuPlugin_l161) begin
       _zz_decode_RS2_2 = VfuPlugin_bus_rsp_payload_output;
     end
   end
@@ -2939,10 +2943,10 @@ module VexRiscv (
         execute_arbitration_haltItself = 1'b1;
       end
     end
-    if(when_VfuPlugin_l124) begin
+    if(when_VfuPlugin_l136) begin
       execute_arbitration_haltItself = 1'b1;
     end
-    if(when_VfuPlugin_l131) begin
+    if(when_VfuPlugin_l143) begin
       execute_arbitration_haltItself = 1'b1;
     end
   end
@@ -3008,8 +3012,8 @@ module VexRiscv (
     if(when_DBusCachedPlugin_l458) begin
       writeBack_arbitration_haltItself = 1'b1;
     end
-    if(when_VfuPlugin_l149) begin
-      if(when_VfuPlugin_l150) begin
+    if(when_VfuPlugin_l161) begin
+      if(when_VfuPlugin_l162) begin
         writeBack_arbitration_haltItself = 1'b1;
       end
     end
@@ -3658,12 +3662,12 @@ module VexRiscv (
   assign DBusCachedPlugin_mmuBus_busy = 1'b0;
   assign _zz_decode_VFU_ENABLE_1 = ((decode_INSTRUCTION & 32'h00004050) == 32'h00004050);
   assign _zz_decode_VFU_ENABLE_2 = ((decode_INSTRUCTION & 32'h00000044) == 32'h00000040);
-  assign _zz_decode_VFU_ENABLE_3 = ((decode_INSTRUCTION & 32'h00000060) == 32'h00000040);
-  assign _zz_decode_VFU_ENABLE_4 = ((decode_INSTRUCTION & 32'h00000004) == 32'h00000004);
-  assign _zz_decode_VFU_ENABLE_5 = ((decode_INSTRUCTION & 32'h00000054) == 32'h00000014);
-  assign _zz_decode_VFU_ENABLE_6 = ((decode_INSTRUCTION & 32'h0000005c) == 32'h00000004);
+  assign _zz_decode_VFU_ENABLE_3 = ((decode_INSTRUCTION & 32'h00000004) == 32'h00000004);
+  assign _zz_decode_VFU_ENABLE_4 = ((decode_INSTRUCTION & 32'h00000054) == 32'h00000014);
+  assign _zz_decode_VFU_ENABLE_5 = ((decode_INSTRUCTION & 32'h0000005c) == 32'h00000004);
+  assign _zz_decode_VFU_ENABLE_6 = ((decode_INSTRUCTION & 32'h00000054) == 32'h00000054);
   assign _zz_decode_VFU_ENABLE_7 = ((decode_INSTRUCTION & 32'h00001000) == 32'h0);
-  assign _zz_decode_VFU_ENABLE = {({_zz_decode_VFU_ENABLE_3,_zz_decode_VFU_ENABLE_6} != 2'b00),{(_zz_decode_VFU_ENABLE_7 != 1'b0),{(_zz_decode_VFU_ENABLE_7 != 1'b0),{(_zz__zz_decode_VFU_ENABLE != _zz__zz_decode_VFU_ENABLE_1),{_zz__zz_decode_VFU_ENABLE_2,{_zz__zz_decode_VFU_ENABLE_4,_zz__zz_decode_VFU_ENABLE_7}}}}}};
+  assign _zz_decode_VFU_ENABLE = {({_zz_decode_VFU_ENABLE_6,_zz_decode_VFU_ENABLE_5} != 2'b00),{(_zz_decode_VFU_ENABLE_7 != 1'b0),{(_zz_decode_VFU_ENABLE_7 != 1'b0),{(_zz__zz_decode_VFU_ENABLE != _zz__zz_decode_VFU_ENABLE_1),{_zz__zz_decode_VFU_ENABLE_2,{_zz__zz_decode_VFU_ENABLE_4,_zz__zz_decode_VFU_ENABLE_7}}}}}};
   assign _zz_decode_SRC1_CTRL_2 = _zz_decode_VFU_ENABLE[2 : 1];
   assign _zz_decode_SRC1_CTRL_1 = _zz_decode_SRC1_CTRL_2;
   assign _zz_decode_ALU_CTRL_2 = _zz_decode_VFU_ENABLE[7 : 6];
@@ -4588,27 +4592,27 @@ module VexRiscv (
   assign execute_VfuPlugin_hazard = ({(writeBack_arbitration_isValid && writeBack_HAS_SIDE_EFFECT),(memory_arbitration_isValid && memory_HAS_SIDE_EFFECT)} != 2'b00);
   assign execute_VfuPlugin_scheduleWish = (execute_arbitration_isValid && execute_VFU_ENABLE);
   assign execute_VfuPlugin_schedule = (execute_VfuPlugin_scheduleWish && (! execute_VfuPlugin_hazard));
-  assign when_VfuPlugin_l124 = (execute_VfuPlugin_scheduleWish && execute_VfuPlugin_hazard);
+  assign when_VfuPlugin_l136 = (execute_VfuPlugin_scheduleWish && execute_VfuPlugin_hazard);
   assign VfuPlugin_bus_cmd_fire = (VfuPlugin_bus_cmd_valid && VfuPlugin_bus_cmd_ready);
-  assign when_VfuPlugin_l127 = (! execute_arbitration_isStuckByOthers);
+  assign when_VfuPlugin_l139 = (! execute_arbitration_isStuckByOthers);
   assign VfuPlugin_bus_cmd_valid = ((execute_VfuPlugin_schedule || execute_VfuPlugin_hold) && (! execute_VfuPlugin_fired));
-  assign when_VfuPlugin_l131 = (VfuPlugin_bus_cmd_valid && (! VfuPlugin_bus_cmd_ready));
+  assign when_VfuPlugin_l143 = (VfuPlugin_bus_cmd_valid && (! VfuPlugin_bus_cmd_ready));
   assign VfuPlugin_bus_cmd_payload_instruction = execute_INSTRUCTION;
   assign VfuPlugin_bus_cmd_payload_inputs_0 = execute_RS1;
   assign VfuPlugin_bus_cmd_payload_inputs_1 = execute_RS2;
   assign VfuPlugin_bus_cmd_payload_rounding = VfuPlugin_rounding;
-  assign writeBack_VfuPlugin_rsp_valid = VfuPlugin_bus_rsp_valid;
-  assign VfuPlugin_bus_rsp_ready = writeBack_VfuPlugin_rsp_ready;
-  assign writeBack_VfuPlugin_rsp_payload_output = VfuPlugin_bus_rsp_payload_output;
+  assign VfuPlugin_bus_rsp_ready = (! VfuPlugin_bus_rsp_rValid);
+  assign VfuPlugin_bus_rsp_rsp_valid = (VfuPlugin_bus_rsp_valid || VfuPlugin_bus_rsp_rValid);
+  assign VfuPlugin_bus_rsp_rsp_payload_output = (VfuPlugin_bus_rsp_rValid ? VfuPlugin_bus_rsp_rData_output : VfuPlugin_bus_rsp_payload_output);
   always @(*) begin
-    writeBack_VfuPlugin_rsp_ready = 1'b0;
-    if(when_VfuPlugin_l149) begin
-      writeBack_VfuPlugin_rsp_ready = (! writeBack_arbitration_isStuckByOthers);
+    VfuPlugin_bus_rsp_rsp_ready = 1'b0;
+    if(when_VfuPlugin_l161) begin
+      VfuPlugin_bus_rsp_rsp_ready = (! writeBack_arbitration_isStuckByOthers);
     end
   end
 
-  assign when_VfuPlugin_l149 = (writeBack_VFU_IN_FLIGHT && writeBack_REGFILE_WRITE_VALID);
-  assign when_VfuPlugin_l150 = (! VfuPlugin_bus_rsp_valid);
+  assign when_VfuPlugin_l161 = (writeBack_VFU_IN_FLIGHT && writeBack_REGFILE_WRITE_VALID);
+  assign when_VfuPlugin_l162 = (! VfuPlugin_bus_rsp_valid);
   assign when_Pipeline_l124 = (! execute_arbitration_isStuck);
   assign when_Pipeline_l124_1 = (! memory_arbitration_isStuck);
   assign when_Pipeline_l124_2 = ((! writeBack_arbitration_isStuck) && (! CsrPlugin_exceptionPortCtrl_exceptionValids_writeBack));
@@ -5015,6 +5019,7 @@ module VexRiscv (
       _zz_CsrPlugin_csrMapping_readDataInit <= 32'h0;
       execute_VfuPlugin_hold <= 1'b0;
       execute_VfuPlugin_fired <= 1'b0;
+      VfuPlugin_bus_rsp_rValid <= 1'b0;
       execute_arbitration_isValid <= 1'b0;
       memory_arbitration_isValid <= 1'b0;
       writeBack_arbitration_isValid <= 1'b0;
@@ -5201,8 +5206,14 @@ module VexRiscv (
       if(VfuPlugin_bus_cmd_fire) begin
         execute_VfuPlugin_fired <= 1'b1;
       end
-      if(when_VfuPlugin_l127) begin
+      if(when_VfuPlugin_l139) begin
         execute_VfuPlugin_fired <= 1'b0;
+      end
+      if(VfuPlugin_bus_rsp_valid) begin
+        VfuPlugin_bus_rsp_rValid <= 1'b1;
+      end
+      if(VfuPlugin_bus_rsp_rsp_ready) begin
+        VfuPlugin_bus_rsp_rValid <= 1'b0;
       end
       if(when_Pipeline_l124_65) begin
         execute_to_memory_VFU_IN_FLIGHT <= _zz_execute_to_memory_VFU_IN_FLIGHT;
@@ -5372,6 +5383,9 @@ module VexRiscv (
       memory_DivPlugin_div_needRevert <= ((_zz_memory_DivPlugin_rs1 ^ (_zz_memory_DivPlugin_rs2 && (! execute_INSTRUCTION[13]))) && (! (((execute_RS2 == 32'h0) && execute_IS_RS2_SIGNED) && (! execute_INSTRUCTION[13]))));
     end
     externalInterruptArray_regNext <= externalInterruptArray;
+    if(VfuPlugin_bus_rsp_ready) begin
+      VfuPlugin_bus_rsp_rData_output <= VfuPlugin_bus_rsp_payload_output;
+    end
     if(when_Pipeline_l124) begin
       decode_to_execute_PC <= decode_PC;
     end
