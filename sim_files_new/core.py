@@ -329,7 +329,7 @@ class VexRiscv(CPU, AutoCSR):
             i_CfuPlugin_bus_rsp_payload_outputs_0    = cfu_bus.rsp.payload.outputs_0,
         )
 
-    def add_vfu(self, vfu_filename):
+    def add_vfu(self, vfu_filename, rvv_source_dir):
         # Check CVFU presence.
         if not os.path.exists(vfu_filename):
             raise OSError(f"Unable to find VexRiscv VFU plugin {vfu_filename}.")
@@ -373,6 +373,8 @@ class VexRiscv(CPU, AutoCSR):
             i_reset                    = ResetSignal("sys"),
         )
         self.platform.add_source(vfu_filename)
+        self.platform.add_verilog_include_path(rvv_source_dir)
+        self.platform.add_verilog_include_path(str(rvv_source_dir + "/vALU"))
 
         # Connect CPU to the VFU:CPU bus.
         self.cpu_params.update(

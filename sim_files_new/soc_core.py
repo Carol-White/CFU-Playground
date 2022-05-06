@@ -71,6 +71,7 @@ class SoCCore(LiteXSoC):
         cpu_variant              = None,
         cpu_cfu                  = None,
         cpu_vfu                  = None,
+        rvv_src                  = None,
 
         # CFU parameters
         cfu_filename             = None,
@@ -188,7 +189,8 @@ class SoCCore(LiteXSoC):
             variant       = "standard" if cpu_variant is None else cpu_variant,
             reset_address = None if integrated_rom_size else cpu_reset_address,
             cfu           = cpu_cfu,
-            vfu           = cpu_vfu)
+            vfu           = cpu_vfu,
+            rvv_src       = rvv_src)
 
         # Add User's interrupts
         if self.irq.enabled:
@@ -311,6 +313,7 @@ def soc_core_args(parser):
     soc_group.add_argument("--cpu-reset-address", default=None,      type=auto_int, help="CPU reset address (Boot from Integrated ROM by default).")
     soc_group.add_argument("--cpu-cfu",           default=None,                     help="Optional CPU CFU file/instance to add to the CPU.")
     soc_group.add_argument("--cpu-vfu",           default=None,                     help="Optional CPU VFU file/instance to add to the CPU.")
+    soc_group.add_argument("--rvv-src",           default=None,                     help="Optional RVV source dir for VFU to add to the CPU.")
 
     # Controller parameters
     soc_group.add_argument("--no-ctrl", action="store_true", help="Disable Controller.")

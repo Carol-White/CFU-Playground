@@ -886,7 +886,7 @@ class SoC(Module):
         self.add_config("CSR_DATA_WIDTH", self.csr.data_width)
         self.add_config("CSR_ALIGNMENT",  self.csr.alignment)
 
-    def add_cpu(self, name="vexriscv", variant="standard", reset_address=None, cfu=None, vfu=None):
+    def add_cpu(self, name="vexriscv", variant="standard", reset_address=None, cfu=None, vfu=None, rvv_src=None):
         # Check that CPU is supported.
         if name not in cpu.CPUS.keys():
             self.logger.error("{} CPU {}, supporteds: {}.".format(
@@ -912,7 +912,7 @@ class SoC(Module):
 
         # Add optional VFU plugin.
         if "rvvLite" in variant and hasattr(self.cpu, "add_vfu"):
-            self.cpu.add_vfu(vfu_filename=vfu)
+            self.cpu.add_vfu(vfu_filename=vfu, rvv_source_dir=rvv_src)
 
         # Update SoC with CPU constraints.
         # IOs regions.
