@@ -71,6 +71,12 @@ void print_result(int op, uint32_t v0, uint32_t v1, uint32_t r) {
       op, v0, v1, r, r, r);
 }
 
+void print_result_t(int op, uint32_t v0, uint32_t v1, uint32_t vd, uint32_t r) {
+  printf(
+      "rvv_op%1d(%08lx, %08lx, %08lx) = %08lx (hex), %ld (signed), %lu (unsigned)\n",
+      op, v0, v1, vd, r, r, r);
+}
+
 void do_interactive_tests(void) {
   puts("RVV-Lite Interactive Test:");
 
@@ -86,6 +92,32 @@ void do_interactive_tests(void) {
   print_result(7, v0, v1, rvv_op(7, 0, v0, v1));
 }
 
+void do_opvv_tests(void) {
+  puts("RVV-Lite OPVV Test:");
+
+  // uint32_t v0 = read_val("  First vector source ");
+  // uint32_t v1 = read_val("  Second vector source ");
+  // uint32_t vd = read_val("  Vector dest ");
+
+  // rvv_opvv_hw(0, 0, "v0", "v1", "v2");
+  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
+  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
+  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
+
+  print_result_t(0, 2, 1, 0, rvv_opvv_hw(5, 4, "v2", "v1", "v0"));
+
+  uint32_t v0 = read_val("  First operand value  ");
+  uint32_t v1 = read_val("  Second operand value ");
+  print_result(0, v0, v1, rvv_op(0, 0, v0, v1));
+  // print_result_t(1, v0, v1, vd, rvv_opvv_hw(1, 0, v0, v1, vd));
+  // print_result_t(2, v0, v1, vd, rvv_opvv_hw(2, 0, v0, v1, vd));
+  // print_result_t(3, v0, v1, vd, rvv_opvv_hw(3, 0, v0, v1, vd));
+  // print_result_t(4, v0, v1, vd, rvv_opvv_hw(4, 0, v0, v1, vd));
+  // print_result_t(5, v0, v1, vd, rvv_opvv_hw(5, 0, v0, v1, vd));
+  // print_result_t(6, v0, v1, vd, rvv_opvv_hw(6, 0, v0, v1, vd));
+  // print_result_t(7, v0, v1, vd, rvv_opvv_hw(7, 0, v0, v1, vd));
+}
+
 struct Menu MENU = {
     "Tests for Functional rvvs",
     "functional",
@@ -93,6 +125,7 @@ struct Menu MENU = {
         MENU_ITEM('f', "Run fixed rvv tests", do_fixed_tests),
         MENU_ITEM('c', "Run hw/sw compare tests", do_compare_tests),
         MENU_ITEM('i', "Run interactive tests", do_interactive_tests),
+        MENU_ITEM('v', "Run OPVV tests", do_opvv_tests),
         MENU_END,
     },
 };

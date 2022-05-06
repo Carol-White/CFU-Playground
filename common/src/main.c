@@ -50,7 +50,7 @@ static struct Menu MENU = {
     "main",
     {
         MENU_ITEM('1', "TfLM Models menu", models_menu),
-        MENU_ITEM('2', "Functional RVVLite Tests", do_functional_rvv_tests),
+        MENU_ITEM('2', "Functional CFU Tests", do_functional_cfu_tests),
         MENU_ITEM('3', "Project menu", do_proj_menu),
         MENU_ITEM('4', "Performance Counter Tests", perf_test_menu),
         MENU_ITEM('5', "TFLite Unit Tests", tflite_do_tests),
@@ -65,6 +65,7 @@ static struct Menu MENU = {
 #ifdef CSR_VIDEO_FRAMEBUFFER_BASE
         MENU_ITEM('9', "Framebuffer Debugging", framebuffer_menu),
 #endif
+        MENU_ITEM('r', "Functional RVVLite Tests", do_functional_rvv_tests),
 #ifdef PLATFORM_sim
         MENU_ITEM('t', "trace (only works in simulation)", trace_sim),
         MENU_ITEM('Q', "Exit (only works in simulation)", exit_sim),

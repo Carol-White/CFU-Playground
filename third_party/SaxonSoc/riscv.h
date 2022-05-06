@@ -205,12 +205,46 @@ asm(".set regnum_t4  , 29");
 asm(".set regnum_t5  , 30");
 asm(".set regnum_t6  , 31");
 
+asm(".set v0   ,  0");
+asm(".set v1   ,  1");
+asm(".set v2   ,  2");
+asm(".set v3   ,  3");
+asm(".set v4   ,  4");
+asm(".set v5   ,  5");
+asm(".set v6   ,  6");
+asm(".set v7   ,  7");
+asm(".set v8   ,  8");
+asm(".set v9   ,  9");
+asm(".set v10  , 10");
+asm(".set v11  , 11");
+asm(".set v12  , 12");
+asm(".set v13  , 13");
+asm(".set v14  , 14");
+asm(".set v15  , 15");
+asm(".set v16  , 16");
+asm(".set v17  , 17");
+asm(".set v18  , 18");
+asm(".set v19  , 19");
+asm(".set v20  , 20");
+asm(".set v21  , 21");
+asm(".set v22  , 22");
+asm(".set v23  , 23");
+asm(".set v24  , 24");
+asm(".set v25  , 25");
+asm(".set v26  , 26");
+asm(".set v27  , 27");
+asm(".set v28  , 28");
+asm(".set v29  , 29");
+asm(".set v30  , 30");
+asm(".set v31  , 31");
+
 asm(".set CUSTOM0  , 0x0B");
 asm(".set CUSTOM1  , 0x2B");
 
-asm(".set VEC_OP   , 0x57");
-asm(".set VEC_LD   , 0x27");
-asm(".set VEC_ST   , 0x07");
+asm(".set RVV_OP   , 0x57");
+asm(".set RVV_LD   , 0x27");
+asm(".set RVV_ST   , 0x07");
+asm(".set RVV_FAKE   , 0x77");
 
 #define opcode_R(opcode, func3, func7, rs1, rs2)   \
 ({                                             \
@@ -233,3 +267,26 @@ asm(".set VEC_ST   , 0x07");
     );                                         \
     __v;                                       \
 })
+
+// TODO: figure out how to actually put the right vd in
+#define opcode_VV(opcode, func3, func7, vs1, vs2, vd)   \
+({                                              \
+    register unsigned long __v;                 \
+    asm volatile(                               \
+        ".word ((" #opcode ") | ((" #vd ") << 7) | ((" #vs1 ") << 15) | ((" #vs2 ") << 20) | ((" #func3 ") << 12) | ((" #func7 ") << 25));" \
+        : [rd] "=r" (__v)                       \
+    );                                          \
+    __v;                                        \
+})
+
+// #define opcode_VR(opcode, func3, func7, rs1, rs2)   
+// ({                                             
+//     register unsigned long __v;                
+//     asm volatile(                              
+//      ".word ((" #opcode ") | (regnum_%0 << 7) | (regnum_%1 << 15) | (regnum_%2 << 20) | ((" #func3 ") << 12) | ((" #func7 ") << 25));"   
+//      : [rd] "=r" (__v)                          
+//      : "r" (rs1), "r" (rs2)        
+//     );                                         
+//     __v;                                       
+// })
+//((" #vd ") << 7)

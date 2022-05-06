@@ -24,9 +24,9 @@
 
 /* riscv.h defines a macro:
 
-    #define opcode_R(opcode, funct3, funct7, rs1, rs2)
+    #define opcode_VR(opcode, funct3, funct7, rs1, rs2)
 
-   that returns at 32b value.  The opcode must be "CUSTOM0" (also defined in
+   that returns at 32b value.  The opcode must be "RVV_XX" (also defined in
    riscv.h).
 
    'func3' is used as functionID sent to the rvv.
@@ -37,11 +37,13 @@
 
 // generic name for each custom instruction - via hardware
 #define rvv_ld_hw(funct3, funct7, rs1, rs2) \
-  opcode_VR(VEC_LD, funct3, funct7, (rs1), (rs2))
+  opcode_VR(RVV_LD, funct3, funct7, (rs1), (rs2))
 #define rvv_st_hw(funct3, funct7, rs1, rs2) \
-  opcode_VR(VEC_ST, funct3, funct7, (rs1), (rs2))
+  opcode_VR(RVV_ST, funct3, funct7, (rs1), (rs2))
 #define rvv_op_hw(funct3, funct7, rs1, rs2) \
-  opcode_VR(VEC_OP, funct3, funct7, (rs1), (rs2))
+  opcode_VR(RVV_OP, funct3, funct7, (rs1), (rs2))
+#define rvv_opvv_hw(funct3, funct7, vs1, vs2, vd) \
+  opcode_VV(RVV_OP, funct3, funct7, (vs1), (vs2), (vd))
 // #define rvv_op0_hw(funct7, rs1, rs2) rvv_op_hw(0, funct7, rs1, rs2)
 // #define rvv_op1_hw(funct7, rs1, rs2) rvv_op_hw(1, funct7, rs1, rs2)
 // #define rvv_op2_hw(funct7, rs1, rs2) rvv_op_hw(2, funct7, rs1, rs2)
@@ -64,7 +66,7 @@
 // #define rvv_op7_sw(funct7, rs1, rs2) rvv_op_sw(7, funct7, rs1, rs2)
 
 // generic name for each custom instruction - switchable
-// #define rvv_op0(funct7, rs1, rs2) rvv_op(0, funct7, rs1, rs2)
+#define rvv_op0(funct7, rs1, rs2) rvv_op(0, funct7, rs1, rs2)
 // #define rvv_op1(funct7, rs1, rs2) rvv_op(1, funct7, rs1, rs2)
 // #define rvv_op2(funct7, rs1, rs2) rvv_op(2, funct7, rs1, rs2)
 // #define rvv_op3(funct7, rs1, rs2) rvv_op(3, funct7, rs1, rs2)
