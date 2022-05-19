@@ -33,8 +33,8 @@ ifndef CFU_ROOT
 endif
 
 PROJ_DIR:=  $(CFU_ROOT)/proj/$(PROJ)
-CFU_V:=     $(if $(wildcard $(PROJ_DIR)/cfu.sv), $(PROJ_DIR)/cfu.sv, $(PROJ_DIR)/cfu.v)
-CFU_ARGS:=  --cpu-cfu $(CFU_V)
+CFU_V:=     $(if $(wildcard $(PROJ_DIR)/cfu.sv),$(PROJ_DIR)/cfu.sv,$(if $(wildcard $(PROJ_DIR)/vfu.v),$(PROJ_DIR)/vfu.v,$(PROJ_DIR)/cfu.v))
+CFU_ARGS:=  $(if $(wildcard $(PROJ_DIR)/vfu.v), --cpu-vfu, --cpu-cfu) $(CFU_V) $(if $(wildcard $(PROJ_DIR)/vfu.v), --rvv-src $(CFU_ROOT)/../src, )
 TARGET_ARGS:= --target $(TARGET)
 SOFTWARE_ARGS:= --software-load --software-path $(PROJ_DIR)/build/software.bin
 
@@ -52,9 +52,9 @@ ifdef USE_YOSYS
 LITEX_ARGS += --synth-mode yosys
 endif
 
-ifdef USE_SYMBIFLOW
-LITEX_ARGS += --toolchain symbiflow
-else 
+# ifdef USE_SYMBIFLOW
+# LITEX_ARGS += --toolchain symbiflow
+# else 
 ifdef USE_VIVADO
 LITEX_ARGS += --toolchain vivado
 endif
@@ -64,7 +64,7 @@ endif
 ifdef USE_SPI_SDCARD
 LITEX_ARGS += --with-spi-sdcard
 endif
-endif
+# endif
 
 PYRUN:=     $(CFU_ROOT)/scripts/pyrun
 TARGET_RUN:=  MAKEFLAGS=-j8 $(PYRUN) ./common_soc.py $(LITEX_ARGS)

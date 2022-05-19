@@ -97,8 +97,10 @@ BITSTREAM    := $(SOC_GATEWARE_DIR)/$(PLATFORM).bit
 PROJ_DIR        := $(realpath .)
 CFU_GEN         := $(PROJ_DIR)/cfu_gen.py
 CFU_VERILOG     := $(if $(wildcard $(PROJ_DIR)/cfu.sv),$(PROJ_DIR)/cfu.sv,$(if $(wildcard $(PROJ_DIR)/vfu.v),$(PROJ_DIR)/vfu.v,$(PROJ_DIR)/cfu.v))
+PROJ_NAME       := $(if $(wildcard $(PROJ_DIR)/vfu.v),vfu,cfu)
 BUILD_DIR       := $(PROJ_DIR)/build
 PYRUN           := $(CFU_ROOT)/scripts/pyrun
+RVV_DIR			:= $(CFU_ROOT)/../src
 
 # Optional additional arguments for cfu_gen
 CFU_GEN_EXTRA_ARGS ?=
@@ -204,8 +206,8 @@ renode-test: renode-scripts
 renode-scripts: $(SOFTWARE_ELF)
 	@mkdir -p $(BUILD_DIR)/renode
 ifneq '$(SW_ONLY)' '1'
-	pushd $(BUILD_DIR)/renode && cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_TRACE=$(ENABLE_TRACE_ARG) -DTRACE_DEPTH_VAL=$(VERILATOR_TRACE_DEPTH) \
-		-DINCLUDE_DIR="$(PROJ_DIR)" -DVTOP="$(CFU_VERILOG)" -DVIL_DIR="$(VIL_DIR)" $${VERILATOR_PATH:+"-DUSER_VERILATOR_DIR=$$VERILATOR_PATH"} \
+	pushd $(BUILD_DIR)/renode && cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_TRACE=$(ENABLE_TRACE_ARG) -DTRACE_DEPTH_VAL=$(VERILATOR_TRACE_DEPTH) -DPROJ_NAME=$(PROJ_NAME)\
+		-DINCLUDE_DIR="$(PROJ_DIR)" -DRVV_DIR="$(RVV_DIR)" -DVTOP="$(CFU_VERILOG)" -DVIL_DIR="$(VIL_DIR)" $${VERILATOR_PATH:+"-DUSER_VERILATOR_DIR=$$VERILATOR_PATH"} \
 		-DTRACE_FILEPATH="$(VERILATOR_TRACE_PATH)" "$(RVI_DIR)" && make libVtop && popd
 	$(CFU_ROOT)/scripts/generate_renode_scripts.py $(SOC_BUILD_DIR)/csr.json $(TARGET) $(BUILD_DIR)/renode/ --repl $(TARGET_REPL)
 else

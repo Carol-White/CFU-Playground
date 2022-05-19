@@ -63,6 +63,8 @@ def main():
     parser.add_argument("--separate-arena", action="store_true", help="Add arena mem region at 0x60000000")
     parser.add_argument("--cfu-mport", action="store_true", help="Add ports between arena and CFU " \
                         "(implies --separate-arena)")
+    # parser.add_argument("--vfu-mport", action="store_true", help="Add ports between arena and VFU " \
+    #                     "(implies --separate-arena)")
     parser.add_argument("--bin", help="RISCV binary to run. Required if --run is set.")
     parser.set_defaults(
             csr_csv='csr.csv',
