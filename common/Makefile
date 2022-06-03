@@ -20,12 +20,12 @@ NEWLIB_RISCV := $(shell command -v riscv32-elf-newlib-gcc 2> /dev/null)
 ifdef NEWLIB_RISCV
 RV64       := riscv32-elf-newlib-
 else
-RV64       := riscv64-unknown-elf-
+RV64       := riscv32-unknown-elf-
 endif
-CC         := $(RV64)gcc
-CXX        := $(RV64)g++
-OBJDUMP    := $(RV64)objdump
-OBJCOPY    := $(RV64)objcopy
+CC         := clang -v #$(RV64)gcc
+CXX        := clang++ -v#$(RV64)g++ 
+OBJDUMP    := llvm-objdump #$(RV64)objdump
+OBJCOPY    := llvm-objcopy #$(RV64)objcopy
 
 RM         := rm -rf
 COPY       := cp -a
@@ -53,6 +53,15 @@ PACKAGE    := software
 
 DEFINE_FLAGS := $(DEFINES:%=-D %)
 
+RISCV_FLAGS := \
+--target=riscv32 \
+--sysroot=/opt/riscv32/riscv32-unknown-elf \
+--gcc-toolchain=/opt/riscv32 \
+-menable-experimental-extensions \
+-mno-relax \
+-fuse-ld=lld 
+# -L/opt/riscvv/gnu/lib/gcc/riscv64-unknown-elf/cclang++ #lang #
+
 SHARED_FLAGS := \
 	$(CPUFLAGS) \
 	$(DEFINE_FLAGS) \
@@ -66,19 +75,22 @@ SHARED_FLAGS := \
 	-I$(LIBC_DIR)/include \
     -I$(LITEX_HW_DIR) \
     -I$(VEX_SRC_DIR) \
+    -I/opt/riscv32/riscv32-unknown-elf/include \
 	-ffunction-sections \
 	-fdata-sections \
 	-fno-common \
 	-fomit-frame-pointer \
 	-ffreestanding \
-	-Werror\
+	-Wno-error\
 	-Wsign-compare\
 	-Wdouble-promotion\
 	-Wshadow\
 	-Wunused-variable\
 	-Wno-missing-field-initializers\
 	-Wunused-function\
-	-Wno-maybe-uninitialized\
+	-Wno-uninitialized\
+	-Wno-deprecated-register\
+	-Wno-format\
 	-Wswitch\
 	-Wvla\
 	-DTF_LITE_STATIC_MEMORY\
@@ -88,7 +100,8 @@ SHARED_FLAGS := \
 	-DTF_LITE_DISABLE_X86_NEON\
 	-g \
 	-O3 \
-	-fno-builtin 
+	-fno-builtin \
+	$(RISCV_FLAGS) 
 
 CFLAGS  := \
 	$(SHARED_FLAGS)\
@@ -97,7 +110,6 @@ CFLAGS  := \
 
 CXXFLAGS   := \
 	$(SHARED_FLAGS) \
-	-std=c++11 \
 	-fstrict-aliasing \
 	-fno-rtti \
 	-fno-exceptions \

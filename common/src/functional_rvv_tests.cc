@@ -104,11 +104,11 @@ void do_opvv_tests(void) {
   // r = rvv_opvv_hw(0, 0, 1, 2, 3);
   // r = rvv_opvv_hw(0, 0, 1, 2, 3);
 
-  print_result_t(0, 2, 1, 0, rvv_opvv_hw(5, 4, "v2", "v1", "v0"));
+  print_result_t(0, 2, 1, 3, rvv_opvv_hw(5, 4, "v2", "v1", "v3"));
 
-  uint32_t v0 = read_val("  First operand value  ");
-  uint32_t v1 = read_val("  Second operand value ");
-  print_result(0, v0, v1, rvv_op(0, 0, v0, v1));
+  // uint32_t v0 = read_val("  First operand value  ");
+  // uint32_t v1 = read_val("  Second operand value ");
+  // print_result(0, v0, v1, rvv_op(0, 0, v0, v1));
   // print_result_t(1, v0, v1, vd, rvv_opvv_hw(1, 0, v0, v1, vd));
   // print_result_t(2, v0, v1, vd, rvv_opvv_hw(2, 0, v0, v1, vd));
   // print_result_t(3, v0, v1, vd, rvv_opvv_hw(3, 0, v0, v1, vd));

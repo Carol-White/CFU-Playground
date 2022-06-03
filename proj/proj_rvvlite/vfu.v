@@ -50,7 +50,8 @@ module Vfu (
         rvv_proc (.clk(clk), .rst_n(~reset), .insn_in(cmd_payload_instruction), .insn_valid(cmd_valid),
                   .mem_port_in(mem_port_in), .mem_port_valid_in(mem_port_valid_in), .mem_port_ready_out(mem_port_ready_out),
                   .mem_port_out(mem_port_out), .mem_port_req(mem_port_req_out), .mem_port_addr_out(mem_port_addr_out), .mem_port_valid_out(mem_port_valid_out),
-                  .proc_rdy(cmd_ready), .vexrv_data_in_1(cmd_payload_inputs_0), .vexrv_data_in_2(cmd_payload_inputs_1), .vexrv_data_out(rsp_payload_output));
+                  .proc_rdy(cmd_ready), .vexrv_data_in_1(cmd_payload_inputs_0), .vexrv_data_in_2(cmd_payload_inputs_1),
+                  .vexrv_data_out(rsp_payload_output), .vexrv_valid_out(rsp_valid));
 
   reg out_valid;
   reg [31:0] out_payload;
@@ -65,7 +66,7 @@ module Vfu (
     out_payload <= s0_payload;
   end
 
-  assign rsp_valid = out_valid;
-  assign rsp_payload_output = out_payload;
+  // assign rsp_valid          = out_valid;
+  // assign rsp_payload_output = out_payload;
 
 endmodule
