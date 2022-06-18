@@ -20,7 +20,7 @@ NEWLIB_RISCV := $(shell command -v riscv32-elf-newlib-gcc 2> /dev/null)
 ifdef NEWLIB_RISCV
 RV64       := riscv32-elf-newlib-
 else
-RV64       := riscv64-unknown-elf-
+RV64       := /opt/riscv/sifive/bin/riscv32-unknown-elf-
 endif
 CC         := $(RV64)gcc
 CXX        := $(RV64)g++
