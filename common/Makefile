@@ -84,8 +84,10 @@ SHARED_FLAGS := \
 	-Wno-error\
 	-Wsign-compare\
 	-Wdouble-promotion\
+	-Wno-unused-value\
 	-Wshadow\
-	-Wunused-variable\
+	-Wno-unused-variable\
+	-Wno-unused-but-set-variable\
 	-Wno-missing-field-initializers\
 	-Wunused-function\
 	-Wno-uninitialized\
