@@ -17,6 +17,8 @@
 #include "functional_rvv_tests.h"
 
 #include <stdio.h>
+#include <riscv_vector.h>
+#include <cstdlib>
 
 #include "base.h"
 #include "rvvLite.h"
@@ -24,6 +26,25 @@
 #include "riscv.h"
 
 namespace {
+
+void do_add_test(void) {
+  vsetvl_e32m8(64);
+
+  vuint32m8_t vA, vB, vC;
+
+  uint32_t v0[32], v1[32], v2[32];
+
+  for (int i = 0; i < 32; i++) {
+    v0[i] = i;
+    v1[i] = i + 1;
+  }
+
+  vA = vle32_v_u32m8(v0, 8);
+  vB = vle32_v_u32m8(v1, 8);
+  vC = vadd_vv_u32m8(vA, vB, 8);
+
+  vse32_v_u32m8(v2, vC, 8);
+}
 
 void do_fixed_tests(void) {
   puts("RVV-Lite TEST for op0, 1 and 2:");
@@ -126,6 +147,7 @@ struct Menu MENU = {
         MENU_ITEM('c', "Run hw/sw compare tests", do_compare_tests),
         MENU_ITEM('i', "Run interactive tests", do_interactive_tests),
         MENU_ITEM('v', "Run OPVV tests", do_opvv_tests),
+        MENU_ITEM('a', "Run ADD test", do_add_test),
         MENU_END,
     },
 };

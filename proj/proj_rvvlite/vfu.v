@@ -65,7 +65,7 @@ module Vfu (
     out_payload <= s0_payload;
   end
 
-  assign rsp_valid = out_valid;
+  assign rsp_valid = 1;
   // assign rsp_payload_output = out_payload;
 
 endmodule

@@ -19,7 +19,6 @@
 #include <generated/mem.h>
 #include <generated/soc.h>
 #include <stdio.h>
-#include <riscv_vector.h>
 
 #include "base.h"
 #include "benchmarks.h"
