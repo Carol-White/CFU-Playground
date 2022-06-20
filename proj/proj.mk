@@ -159,6 +159,8 @@ SOFTWARE_ELF     := $(BUILD_DIR)/software.elf
 SOFTWARE_LOG     := $(BUILD_DIR)/software.log
 UNITTEST_LOG     := $(BUILD_DIR)/unittest.log
 
+SOFT_TGT ?= $(SOFTWARE_BIN)
+
 # Directory where we build the project-specific gateware
 SOC_DIR      := $(CFU_ROOT)/soc
 HPS_MK       := $(MAKE) -C $(SOC_DIR) -f $(SOC_DIR)/hps.mk
@@ -339,6 +341,13 @@ load: $(SOFTWARE_BIN)
 	@while [ ! -e $(TTY) ]; do echo "Waiting for UART"; sleep 1; done
 	$(LXTERM) --speed $(UART_SPEED) $(CRC) --kernel $(SOFTWARE_BIN) $(TTY)
 
+load_custom: $(SOFTWARE_BIN)
+	@echo Running custom software on FPGA Board
+# Load hook allows common_soc.py to provide board-specific changes to load.
+# This isn't ideal, the logic is starting to get too voluminous for a Makefile.
+	@while [ ! -e $(TTY) ]; do echo "Waiting for UART"; sleep 1; done
+	$(LXTERM) --speed $(UART_SPEED) $(CRC) --kernel $(SOFT_TGT) $(TTY)
+
 connect:
 	@echo Connecting to board
 	$(LXTERM) --speed $(UART_SPEED) $(CRC) --kernel $(SOFTWARE_BIN) $(TTY)
@@ -353,7 +362,6 @@ endif
 else
 # $(PLATFORM) == 'sim'
 load: $(CFU_VERILOG) $(SOFTWARE_BIN)
-	@echo Just proving that we make it here!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
 	$(SIM_MK) run
 
 unit: $(SOFTWARE_BIN)

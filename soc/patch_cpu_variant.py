@@ -56,7 +56,7 @@ def patch_cpu_variant():
         'hps+cfu':              '-march=rv32im -mabi=ilp32',
         'hpsdelta+cfu':         '-march=rv32im -mabi=ilp32',
         'dbpl8+cfu':            '-march=rv32im -mabi=ilp32',
-        'rvvLife':              '-march=rv32im -mabi=ilp32',
+        'rvvLite':              '-march=rv32gcv1p0 -mabi=ilp32',
         'minimal+cfu':          '-march=rv32i  -mabi=ilp32',
         'slimopt+cfu':          '-march=rv32im -mabi=ilp32',
         'slim+cfu':             '-march=rv32im -mabi=ilp32',
