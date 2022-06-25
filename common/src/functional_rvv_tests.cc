@@ -27,6 +27,9 @@
 
 namespace {
 
+void print_result(int op, uint32_t v0, uint32_t v1, uint32_t r);
+void print_result_t(int op, uint32_t v0, uint32_t v1, uint32_t vd, uint32_t r);
+
 void do_add_test(void) {
   vsetvl_e32m8(64);
 
@@ -44,6 +47,13 @@ void do_add_test(void) {
   vC = vadd_vv_u32m8(vA, vB, 8);
 
   vse32_v_u32m8(v2, vC, 8);
+  printf("Done test");
+}
+
+void do_add_test_macro(void) {
+  rvv_opvv_hw(7, 98, "v8", "v19", "v0");
+  rvv_opvv_hw(7, 98, "v24", "v8", "v24");
+  printf("Done test");
 }
 
 void do_fixed_tests(void) {
@@ -139,6 +149,16 @@ void do_opvv_tests(void) {
   // print_result_t(7, v0, v1, vd, rvv_opvv_hw(7, 0, v0, v1, vd));
 }
 
+void rip_my_youth () {
+  asm(".word 0xc5347057;"); 
+  asm(".word 0x02056c07;"); 
+  asm(".word 0x0205e407;");
+  asm(".word 0x5e03B057;");
+  // asm(".word 0x03840c57;"); 
+  // asm(".word 0x0207ec27;");
+  print_result(0, 0, 0, 0);
+}
+
 struct Menu MENU = {
     "Tests for Functional rvvs",
     "functional",
@@ -148,6 +168,8 @@ struct Menu MENU = {
         MENU_ITEM('i', "Run interactive tests", do_interactive_tests),
         MENU_ITEM('v', "Run OPVV tests", do_opvv_tests),
         MENU_ITEM('a', "Run ADD test", do_add_test),
+        MENU_ITEM('m', "Run ADD test (macro)", do_add_test_macro),
+        MENU_ITEM('k', "Kill me", rip_my_youth),
         MENU_END,
     },
 };

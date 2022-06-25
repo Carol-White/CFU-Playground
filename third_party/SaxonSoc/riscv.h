@@ -244,7 +244,6 @@ asm(".set CUSTOM1  , 0x2B");
 asm(".set RVV_OP   , 0x57");
 asm(".set RVV_LD   , 0x27");
 asm(".set RVV_ST   , 0x07");
-asm(".set RVV_FAKE   , 0x77");
 
 #define opcode_R(opcode, func3, func7, rs1, rs2)   \
 ({                                             \
@@ -278,6 +277,17 @@ asm(".set RVV_FAKE   , 0x77");
     );                                          \
     __v;                                        \
 })
+
+#define inject_word(word) \
+({                                              \
+    register unsigned long __v;                 \
+    asm volatile(                               \
+        ".word 0x" word ";" \
+        : [rd] "=r" (__v)                       \
+    );                                          \
+    __v;                                        \
+})
+
 
 // #define opcode_VR(opcode, func3, func7, rs1, rs2)   
 // ({                                             
