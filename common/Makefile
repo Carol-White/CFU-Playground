@@ -22,10 +22,10 @@ RV64       := riscv32-elf-newlib-
 else
 RV64       := riscv32-unknown-elf-
 endif
-CC         := clang -v #$(RV64)gcc
-CXX        := clang++ -v#$(RV64)g++ 
-OBJDUMP    := llvm-objdump #$(RV64)objdump
-OBJCOPY    := llvm-objcopy #$(RV64)objcopy
+CC         := $(RV64)gcc
+CXX        := $(RV64)g++ 
+OBJDUMP    := $(RV64)objdump
+OBJCOPY    := $(RV64)objcopy
 
 RM         := rm -rf
 COPY       := cp -a
@@ -54,12 +54,12 @@ PACKAGE    := software
 DEFINE_FLAGS := $(DEFINES:%=-D %)
 
 RISCV_FLAGS := \
---target=riscv32 \
---sysroot=/opt/riscv32/riscv32-unknown-elf \
---gcc-toolchain=/opt/riscv32 \
--menable-experimental-extensions \
--mno-relax \
--fuse-ld=lld 
+# --target=riscv32 \
+# --sysroot=/opt/riscv32/riscv32-unknown-elf \
+# --gcc-toolchain=/opt/riscv32 \
+# -menable-experimental-extensions \
+# -mno-relax \
+# -fuse-ld=lld 
 # -L/opt/riscvv/gnu/lib/gcc/riscv64-unknown-elf/cclang++ #lang #
 
 SHARED_FLAGS := \
@@ -90,7 +90,7 @@ SHARED_FLAGS := \
 	-Wno-unused-but-set-variable\
 	-Wno-missing-field-initializers\
 	-Wunused-function\
-	-Wno-uninitialized\
+	-Wno-maybe-uninitialized\
 	-Wno-deprecated-register\
 	-Wno-format\
 	-Wswitch\
@@ -112,6 +112,7 @@ CFLAGS  := \
 
 CXXFLAGS   := \
 	$(SHARED_FLAGS) \
+	-std=c++11 \
 	-fstrict-aliasing \
 	-fno-rtti \
 	-fno-exceptions \
