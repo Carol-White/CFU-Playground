@@ -93,8 +93,9 @@ class VfuPlugin(val stageCount : Int,
       )
     )
 
+    // config
     decoderService.add(
-      key = M"-------------------------1010111", // FIXME: some instructions don't need RS2
+      key = M"-----------------000-----1010111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
@@ -105,15 +106,16 @@ class VfuPlugin(val stageCount : Int,
       )
     )
 
+    // alu
     decoderService.add(
-      key = M"-------------------------1110111", // FIXME: some instructions don't need RS2 or RD
+      key = M"-------------------------1010111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
         BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
         BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
-        RS1_USE -> False,
-        RS2_USE -> False
+        RS1_USE -> True,
+        RS2_USE -> True
       )
     )
   }

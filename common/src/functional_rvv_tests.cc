@@ -44,6 +44,8 @@ void do_add_test(void) {
   vC = vadd_vv_u32m8(vA, vB, 8);
 
   vse32_v_u32m8(v2, vC, 8);
+
+  printf("Finished ADD test\n");
 }
 
 void do_fixed_tests(void) {
