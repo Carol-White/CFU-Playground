@@ -28,22 +28,25 @@
 namespace {
 
 void do_add_test(void) {
-  vsetvl_e32m8(64);
+  vsetvl_e16m2(64);
 
-  vuint32m8_t vA, vB, vC;
+  vuint16m2_t vA, vB, vC;
 
-  uint32_t v0[32], v1[32], v2[32];
+  uint16_t v0[8], v1[8], v2[8];
 
-  for (int i = 0; i < 32; i++) {
+  for (int i = 0; i < 8; i++) {
     v0[i] = i;
     v1[i] = i + 1;
   }
 
-  vA = vle32_v_u32m8(v0, 8);
-  vB = vle32_v_u32m8(v1, 8);
-  vC = vadd_vv_u32m8(vA, vB, 8);
+  // vA = vle16_v_u16m2(v0, 8);
+  // vB = vle16_v_u16m2(v1, 8);
+  vA = vmv_v_x_u16m2(15, 8);
+  vB = vmv_v_x_u16m2(1, 8);
+  
+  vC = vadd_vv_u16m2(vA, vB, 8);
 
-  vse32_v_u32m8(v2, vC, 8);
+  vse16_v_u16m2(v2, vC, 8);
 
   printf("Finished ADD test\n");
 }
