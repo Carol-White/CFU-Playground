@@ -28,25 +28,36 @@
 namespace {
 
 void do_add_test(void) {
-  vsetvl_e32m4(64);
+  vsetvl_e16m2(64);
 
-  vuint32m4_t vA, vB, vC;
+  vuint16m2_t vA, vB, vC;
 
-  uint32_t v0[8], v1[8], v2[8];
+  uint16_t v0[8], v1[8], v2[8], v2_ex[8];
 
   for (int i = 0; i < 8; i++) {
     v0[i] = i;
     v1[i] = i + 1;
+
+    v2_ex[i] = v0[i] + v1[i];
   }
 
-  // vA = vle16_v_u16m2(v0, 8);
-  // vB = vle16_v_u16m2(v1, 8);
-  vA = vmv_v_x_u32m4(15, 8);
-  vB = vid_v_u32m4(8);
+  vA = vle16_v_u16m2(v0, 8);
+  vB = vle16_v_u16m2(v1, 8);
+  // vA = vmv_v_x_u32m4(15, 8);
+  // vB = vid_v_u16m2(8);
 
-  vC = vadd_vv_u32m4(vA, vB, 8);
+  vC = vadd_vv_u16m2(vA, vB, 8);
 
-  vse32_v_u32m4(v2, vC, 8);
+  vse16_v_u16m2(v2, vC, 8);
+
+  // wait for memory to return
+  for (int i = 0; i < 150; i++) {
+    printf("syncing memory...\n");
+  }
+
+  for (int i = 0; i < 8; i++) {
+    printf("Got %d, expected %d\n", v2[i], v2_ex[i]);
+  }
 
   printf("Finished ADD test\n");
 }
@@ -59,7 +70,6 @@ void do_mask_logic_test(void) {
   vbool8_t vm0, vm1, vm2;
 
   int32_t v0[8], v1[8], v2[8];
-  // volatile vbool8_t vm0;
 
   for (int i = 0; i < 8; i++) {
     v0[i] = i;
@@ -74,15 +84,16 @@ void do_mask_logic_test(void) {
   vm0 = vmsgt_vv_i32m4_b8(vB, vA, 8);
   vm1 = vmseq_vv_i32m4_b8(vA, vB, 8);
   vm2 = vmxor_mm_b8(vm0, vm1, 8);
-  // vA.m = vmseq_vv_i32m4_b8(vA, vB, 8);
-  // asm("vsetvli    a5,zero,e32,m4,ta,mu");
-  // asm("vmadd.vv v24,v28,v8");
-  // asm("vmseq.vv v28,v28,v8");
 
 
   vC = vadd_vv_i32m4_m(vm2, vC, vA, vB, 8);
 
   vse32_v_i32m4(v2, vC, 8);
+
+  vA = vle32_v_i32m4(v2, 8);
+  vA = vadd_vv_i32m4(vA, vB, 8);
+
+  vse32_v_i32m4(v1, vA, 8);
 
   printf("Finished MASK test\n");
 }
