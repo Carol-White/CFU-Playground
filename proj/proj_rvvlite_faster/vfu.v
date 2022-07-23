@@ -15,7 +15,7 @@
 `include "axi_mem_queue.sv"
 `include "mock_mem.sv"
 
-`define VLEN           64           // vector length in bits
+`define VLEN           128          // vector length in bits
 `define XLEN           32           // not sure, data width maybe?
 `define NUM_VEC        32           // number of available vector registers
 `define INSN_WIDTH     32           // width of a single instruction
@@ -44,6 +44,7 @@ module Vfu (
     output  [ `MEM_ADDR_WIDTH-1:0]  mbus_ar_addr  ,
     output                          mbus_ar_valid ,
     input                           mbus_ar_ready ,
+
     input   [ `MEM_DATA_WIDTH-1:0]  mbus_r_data   ,
     input                           mbus_r_valid  ,
     output                          mbus_r_ready  ,
@@ -51,6 +52,7 @@ module Vfu (
     output  [ `MEM_ADDR_WIDTH-1:0]  mbus_aw_addr  ,
     output                          mbus_aw_valid ,
     input                           mbus_aw_ready ,
+
     output  [ `MEM_DATA_WIDTH-1:0]  mbus_w_data   ,
     output                          mbus_w_valid  ,
     output  [       `MEM_DW_B-1:0]  mbus_w_strb   ,
@@ -80,9 +82,12 @@ module Vfu (
 
     mem_queue   #(.MBUS_DATA_WIDTH(`MEM_DATA_WIDTH), .MBUS_ADDR_WIDTH(`MEM_DATA_WIDTH), .FIFO_DEPTH_BITS(`FIFO_DEPTH_BITS))
             mq (    .clk(clk), .rst_n(~reset),
-                    .mbus_ar_ready(mbus_ar_ready), .mbus_ar_addr(mbus_ar_addr), .mbus_ar_valid(mbus_ar_valid), .mbus_r_data(mbus_r_data), .mbus_r_valid (mbus_r_valid), .mbus_r_ready (mbus_r_ready),
-                    .mbus_aw_ready(mbus_aw_ready), .mbus_aw_addr (mbus_aw_addr), .mbus_aw_valid(mbus_aw_valid), .mbus_w_data(mbus_w_data), .mbus_w_strb  (mbus_w_strb), .mbus_w_valid (mbus_w_valid),
+                    .mbus_ar_ready(mbus_ar_ready), .mbus_ar_addr(mbus_ar_addr), .mbus_ar_valid(mbus_ar_valid),
+                     .mbus_r_data(mbus_r_data), .mbus_r_valid (mbus_r_valid), .mbus_r_ready (mbus_r_ready),
+                    .mbus_aw_ready(mbus_aw_ready), .mbus_aw_addr (mbus_aw_addr), .mbus_aw_valid(mbus_aw_valid),
+                    .mbus_w_data(mbus_w_data), .mbus_w_strb  (mbus_w_strb), .mbus_w_valid (mbus_w_valid),
                     .mbus_b_resp(mbus_b_resp), .mbus_b_ready (mbus_b_ready), .mbus_b_valid (mbus_b_valid),
                     .rvv_addr_out (rvv_addr_out), .rvv_data_out (rvv_data_out), .rvv_valid_out(rvv_valid_out), .rvv_done_st(rvv_done_st),
-                    .rvv_req_out  (rvv_req_out), .rvv_be_out   (rvv_be_out), .rvv_data_in  (rvv_data_in), .rvv_valid_in(rvv_valid_in), .rvv_start_out(rvv_start_out), .rvv_done_ld(rvv_done_ld));
+                    .rvv_req_out  (rvv_req_out), .rvv_be_out   (rvv_be_out), .rvv_data_in  (rvv_data_in), .rvv_valid_in(rvv_valid_in),
+                    .rvv_start_out(rvv_start_out), .rvv_done_ld(rvv_done_ld));
 endmodule

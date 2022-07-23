@@ -912,7 +912,9 @@ class SoC(Module):
 
         # Add optional VFU plugin.
         if "rvvLite" in variant and hasattr(self.cpu, "add_vfu"):
+            # new_master = wishbone.Interface()
             self.cpu.add_vfu(vfu_filename=vfu, rvv_source_dir=rvv_src)
+            self.bus.add_master(name="vfu", master=self.cpu.vfu_mbus)
 
         # Update SoC with CPU constraints.
         # IOs regions.

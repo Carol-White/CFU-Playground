@@ -15,7 +15,7 @@ import os
 from migen import *
 
 from litex import get_data_mod
-from litex.soc.interconnect import wishbone
+from litex.soc.interconnect import wishbone, axi
 from litex.soc.interconnect.csr import *
 from litex.soc.cores.cpu import CPU, CPU_GCC_TRIPLE_RISCV32
 
@@ -388,6 +388,33 @@ class VexRiscv(CPU, AutoCSR):
             o_VfuPlugin_bus_rsp_ready                = vfu_bus.rsp.ready,
             i_VfuPlugin_bus_rsp_payload_output       = vfu_bus.rsp.payload.output,
         )
+
+        # ADD MEMORY
+        self.vfu_mbus = vfu_mbus = axi.AXILiteInterface(address_width=32, data_width=32);
+        self.memory_buses.append(vfu_mbus)
+
+        self.vfu_params.update(
+            o_mbus_ar_addr  = vfu_mbus.ar.addr,
+            o_mbus_ar_valid = vfu_mbus.ar.valid,
+            i_mbus_ar_ready = vfu_mbus.ar.ready,
+
+            i_mbus_r_data   = vfu_mbus.r.data,
+            i_mbus_r_valid  = vfu_mbus.r.valid,
+            o_mbus_r_ready  = vfu_mbus.r.ready,
+
+            o_mbus_aw_addr  = vfu_mbus.aw.addr,
+            o_mbus_aw_valid = vfu_mbus.aw.valid,
+            i_mbus_aw_ready = vfu_mbus.aw.ready,
+            
+            o_mbus_w_data   = vfu_mbus.w.data,
+            o_mbus_w_strb   = vfu_mbus.w.strb,
+            o_mbus_w_valid  = vfu_mbus.w.valid,
+
+            i_mbus_b_valid  = vfu_mbus.b.valid,
+            i_mbus_b_resp   = vfu_mbus.b.resp,
+            o_mbus_b_ready  = vfu_mbus.b.ready,
+        )
+
 
     @staticmethod
     def add_sources(platform, variant="standard"):

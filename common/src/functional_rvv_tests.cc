@@ -43,17 +43,15 @@ void do_add_test(void) {
 
   vA = vle16_v_u16m2(v0, 8);
   vB = vle16_v_u16m2(v1, 8);
-  // vA = vmv_v_x_u32m4(15, 8);
-  // vB = vid_v_u16m2(8);
 
   vC = vadd_vv_u16m2(vA, vB, 8);
 
   vse16_v_u16m2(v2, vC, 8);
 
   // wait for memory to return
-  for (int i = 0; i < 150; i++) {
-    printf("syncing memory...\n");
-  }
+  // for (int i = 0; i < 150; i++) {
+    // printf("syncing memory...\n");
+  // }
 
   for (int i = 0; i < 8; i++) {
     printf("Got %d, expected %d\n", v2[i], v2_ex[i]);
@@ -62,38 +60,38 @@ void do_add_test(void) {
   printf("Finished ADD test\n");
 }
 
-// FIXME why does this hang???
 void do_mask_logic_test(void) {
-  vsetvl_e32m4(64);
+  int num_elems = 16;
+  vsetvl_e32m4(num_elems);
 
   vint32m4_t vA, vB, vC;
   vbool8_t vm0, vm1, vm2;
 
-  int32_t v0[8], v1[8], v2[8];
+  int32_t v0[num_elems], v1[num_elems], v2[num_elems];
 
-  for (int i = 0; i < 8; i++) {
-    v0[i] = i;
-    v1[i] = i + 1;
-  }
+  // for (int i = 0; i < num_elems; i++) {
+  //   v0[i] = i;
+  //   v1[i] = i + 1;
+  // }
 
   // vA = vle16_v_u16m2(v0, 8);
   // vB = vle16_v_u16m2(v1, 8);
-  vA = vmv_v_x_i32m4(2, 8);
-  vB = vid_v_i32m4(8);
+  vA = vmv_v_x_i32m4(2, num_elems);
+  vB = vid_v_i32m4(num_elems);
 
-  vm0 = vmsgt_vv_i32m4_b8(vB, vA, 8);
-  vm1 = vmseq_vv_i32m4_b8(vA, vB, 8);
-  vm2 = vmxor_mm_b8(vm0, vm1, 8);
+  vm0 = vmsgt_vv_i32m4_b8(vB, vA, num_elems);
+  vm1 = vmseq_vv_i32m4_b8(vA, vB, num_elems);
+  vm2 = vmxor_mm_b8(vm0, vm1, num_elems);
 
 
-  vC = vadd_vv_i32m4_m(vm2, vC, vA, vB, 8);
+  vC = vadd_vv_i32m4_m(vm2, vC, vA, vB, num_elems);
 
-  vse32_v_i32m4(v2, vC, 8);
+  vse32_v_i32m4(v2, vC, num_elems);
 
-  vA = vle32_v_i32m4(v2, 8);
-  vA = vadd_vv_i32m4(vA, vB, 8);
+  vA = vle32_v_i32m4(v2, num_elems);
+  vA = vadd_vv_i32m4(vA, vB, num_elems);
 
-  vse32_v_i32m4(v1, vA, 8);
+  vse32_v_i32m4(v1, vA, num_elems);
 
   printf("Finished MASK test\n");
 }

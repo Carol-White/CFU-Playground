@@ -73,7 +73,7 @@ class VfuPlugin(val stageCount : Int,
       key = M"-------------------------0000111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
-        REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
         BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
         BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
         RS1_USE -> True,
@@ -85,7 +85,7 @@ class VfuPlugin(val stageCount : Int,
       key = M"-------------------------0100111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
-        REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
         BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
         BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
         RS1_USE -> True,
