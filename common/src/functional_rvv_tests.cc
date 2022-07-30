@@ -21,58 +21,104 @@
 #include <cstdlib>
 
 #include "base.h"
-#include "rvvLite.h"
+// #include "rvvLite.h"
 #include "menu.h"
-#include "riscv.h"
+// #include "riscv.h"
 
 namespace {
 
-void do_add_test(void) {
-  vsetvl_e16m2(64);
+void do_basic_ld_st_test(void) {
+  int num_elems = 64;
 
+  vsetvl_e32m4(num_elems);
+
+  int32_t v0[num_elems];
+  int32_t v1[num_elems];
+
+  vint32m4_t vA;
+
+  for (int i = 0; i < num_elems; i++){
+    v0[i] = (int32_t)i;
+    v1[i] = 1;
+  }
+
+  vA = vle32_v_i32m4(v0, num_elems);
+
+  vse32_v_i32m4(v1, vA, num_elems);
+
+  for (int i = 0; i < num_elems; i++) {
+    printf("v1: %0x. %s. Got %d, expected %d\n", &(v1[i]), (v1[i] == v0[i] ? "PASS" : "FAIL"), v1[i], v0[i]);
+  }
+
+  printf("Done basic ld/st test");
+}
+
+void do_add_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e16m2(num_elems);
   vuint16m2_t vA, vB, vC;
 
-  uint16_t v0[8], v1[8], v2[8], v2_ex[8];
+  uint16_t v0[num_elems];
+  uint16_t v1[num_elems];
+  uint16_t v2[num_elems];
+  uint16_t v2_ex[num_elems];
 
-  for (int i = 0; i < 8; i++) {
-    v0[i] = i;
-    v1[i] = i + 1;
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (int32_t)i;
+    v1[i] = (int32_t)(i + 1);
+    v2[i] = 1;
 
     v2_ex[i] = v0[i] + v1[i];
   }
 
-  vA = vle16_v_u16m2(v0, 8);
-  vB = vle16_v_u16m2(v1, 8);
+  vA = vle16_v_u16m2(v0, num_elems);
+  vB = vle16_v_u16m2(v1, num_elems);
 
-  vC = vadd_vv_u16m2(vA, vB, 8);
+  vC = vadd_vv_u16m2(vA, vB, num_elems);
 
-  vse16_v_u16m2(v2, vC, 8);
+  vse16_v_u16m2(v2, vC, num_elems);
 
-  // wait for memory to return
-  // for (int i = 0; i < 150; i++) {
-    // printf("syncing memory...\n");
-  // }
-
-  for (int i = 0; i < 8; i++) {
-    printf("Got %d, expected %d\n", v2[i], v2_ex[i]);
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    printf("v2: %0x. %s. Got %d, expected %d\n", &(v2[i]), (v2[i] == v2_ex[i] ? "PASS" : "FAIL"), v2[i], v2_ex[i]);
+    
+    if (v2[i] != v2_ex[i]) err_count++;
   }
 
-  printf("Finished ADD test\n");
+  printf("Finished ADD test with %d errors.\n", err_count);
 }
 
 void do_mask_logic_test(void) {
-  int num_elems = 16;
+  int num_elems = 2048;
+  
   vsetvl_e32m4(num_elems);
 
   vint32m4_t vA, vB, vC;
   vbool8_t vm0, vm1, vm2;
 
-  int32_t v0[num_elems], v1[num_elems], v2[num_elems];
+  int32_t v0[num_elems];
+  int32_t v1[num_elems];
+  int32_t v2[num_elems];
+  int32_t v3[num_elems];
+  int32_t v2_ex[num_elems];
+  int32_t v3_ex[num_elems];
 
-  // for (int i = 0; i < num_elems; i++) {
-  //   v0[i] = i;
-  //   v1[i] = i + 1;
-  // }
+  // printf("v2 addr: %0x\n", v2);
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = 2;
+    v1[i] = (int32_t)i;
+    v2[i] = 1;
+    v3[i] = 1;
+
+    if (v1[i] <= v0[i])
+      v2_ex[i] = v0[i] + v1[i];
+    else
+      v2_ex[i] = 0;
+
+    v3_ex[i] = v1[i] + v2_ex[i];
+  }
 
   // vA = vle16_v_u16m2(v0, 8);
   // vB = vle16_v_u16m2(v1, 8);
@@ -83,122 +129,41 @@ void do_mask_logic_test(void) {
   vm1 = vmseq_vv_i32m4_b8(vA, vB, num_elems);
   vm2 = vmxor_mm_b8(vm0, vm1, num_elems);
 
-
   vC = vadd_vv_i32m4_m(vm2, vC, vA, vB, num_elems);
 
   vse32_v_i32m4(v2, vC, num_elems);
 
-  vA = vle32_v_i32m4(v2, num_elems);
-  vA = vadd_vv_i32m4(vA, vB, num_elems);
+  vC = vle32_v_i32m4(v2, num_elems);
+  vA = vadd_vv_i32m4(vC, vB, num_elems);
 
-  vse32_v_i32m4(v1, vA, num_elems);
+  vse32_v_i32m4(v3, vA, num_elems);
 
-  printf("Finished MASK test\n");
-}
+  int err_count = 0;
 
-void do_fixed_tests(void) {
-  puts("RVV-Lite TEST for op0, 1 and 2:");
-  puts("arg0        arg1        op0         op1         op2");
-  for (uint32_t i = 0; i < 0x50505; i += 0x8103) {
-    uint32_t j = i ^ 0xffff;
-    uint32_t v0 = rvv_op(0, 0, i, j);
-    uint32_t v1 = rvv_op(1, 0, i, j);
-    uint32_t v2 = rvv_op(2, 0, i, j);
-    printf("0x%08lx, 0x%08lx: 0x%08lx, 0x%08lx, 0x%08lx\n", i, j, v0, v1, v2);
-  }
-}
-
-void do_compare_tests(void) {
-  puts("RVV-Lite COMPARE TEST for op0, 1, and 2:");
-  int count = 0;
-  for (uint32_t i = 0; i < 0xff000000u; i += 0x710005u) {
-    for (uint32_t j = 0; j < 0xff000000u; j += 0xb100233u) {
-      uint32_t hw0 = rvv_op_hw(0, 0, i, j);
-      uint32_t hw1 = rvv_op_hw(1, 0, i, j);
-      uint32_t hw2 = rvv_op_hw(2, 0, i, j);
-      uint32_t sw0 = rvv_op_sw(0, 0, i, j);
-      uint32_t sw1 = rvv_op_sw(1, 0, i, j);
-      uint32_t sw2 = rvv_op_sw(2, 0, i, j);
-      if (hw0 != sw0 || hw1 != sw1 || hw2 != sw2) {
-        puts(
-            "arg0        arg1            fn0               fn1              "
-            "fn2");
-        printf(
-            "0x%08lx, 0x%08lx: 0x%08lx:0x%08lx, 0x%08lx:0x%08lx, "
-            "0x%08lx:0x%08lx <<=== "
-            "MISMATCH!\n",
-            i, j, hw0, sw0, hw1, sw1, hw2, sw2);
-      }
-      ++count;
-      if ((count & 0xffff) == 0) printf("Ran %d comparisons....\n", count);
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. %s. Got %d, expected %d\n", &(v2[i]), (v2[i] == v2_ex[i] ? "PASS" : "FAIL"), v2[i], v2_ex[i]);
     }
   }
-  printf("Ran %d comparisons.\n", count);
-}
 
-void print_result(int op, uint32_t v0, uint32_t v1, uint32_t r) {
-  printf(
-      "rvv_op%1d(%08lx, %08lx) = %08lx (hex), %ld (signed), %lu (unsigned)\n",
-      op, v0, v1, r, r, r);
-}
+  for (int i = 0; i < num_elems; i++) {
+    if (v3[i] != v3_ex[i]){
+      err_count++;
+      printf("v3: %0x. %s. Got %d, expected %d\n", &(v3[i]), (v3[i] == v3_ex[i] ? "PASS" : "FAIL"), v3[i], v3_ex[i]);
+    }
+  }
 
-void print_result_t(int op, uint32_t v0, uint32_t v1, uint32_t vd, uint32_t r) {
-  printf(
-      "rvv_op%1d(%08lx, %08lx, %08lx) = %08lx (hex), %ld (signed), %lu (unsigned)\n",
-      op, v0, v1, vd, r, r, r);
-}
-
-void do_interactive_tests(void) {
-  puts("RVV-Lite Interactive Test:");
-
-  uint32_t v0 = read_val("  First operand value  ");
-  uint32_t v1 = read_val("  Second operand value ");
-  print_result(0, v0, v1, rvv_op(0, 0, v0, v1));
-  print_result(1, v0, v1, rvv_op(1, 0, v0, v1));
-  print_result(2, v0, v1, rvv_op(2, 0, v0, v1));
-  print_result(3, v0, v1, rvv_op(3, 0, v0, v1));
-  print_result(4, v0, v1, rvv_op(4, 0, v0, v1));
-  print_result(5, v0, v1, rvv_op(5, 0, v0, v1));
-  print_result(6, v0, v1, rvv_op(6, 0, v0, v1));
-  print_result(7, v0, v1, rvv_op(7, 0, v0, v1));
-}
-
-void do_opvv_tests(void) {
-  puts("RVV-Lite OPVV Test:");
-
-  // uint32_t v0 = read_val("  First vector source ");
-  // uint32_t v1 = read_val("  Second vector source ");
-  // uint32_t vd = read_val("  Vector dest ");
-
-  // rvv_opvv_hw(0, 0, "v0", "v1", "v2");
-  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
-  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
-  // r = rvv_opvv_hw(0, 0, 1, 2, 3);
-
-  print_result_t(0, 2, 1, 3, rvv_opvv_hw(5, 4, "v2", "v1", "v3"));
-
-  // uint32_t v0 = read_val("  First operand value  ");
-  // uint32_t v1 = read_val("  Second operand value ");
-  // print_result(0, v0, v1, rvv_op(0, 0, v0, v1));
-  // print_result_t(1, v0, v1, vd, rvv_opvv_hw(1, 0, v0, v1, vd));
-  // print_result_t(2, v0, v1, vd, rvv_opvv_hw(2, 0, v0, v1, vd));
-  // print_result_t(3, v0, v1, vd, rvv_opvv_hw(3, 0, v0, v1, vd));
-  // print_result_t(4, v0, v1, vd, rvv_opvv_hw(4, 0, v0, v1, vd));
-  // print_result_t(5, v0, v1, vd, rvv_opvv_hw(5, 0, v0, v1, vd));
-  // print_result_t(6, v0, v1, vd, rvv_opvv_hw(6, 0, v0, v1, vd));
-  // print_result_t(7, v0, v1, vd, rvv_opvv_hw(7, 0, v0, v1, vd));
+  printf("Finished MASK test with %d errors\n", err_count);
 }
 
 struct Menu MENU = {
     "Tests for Functional rvvs",
     "functional",
     {
-        MENU_ITEM('f', "Run fixed rvv tests", do_fixed_tests),
-        MENU_ITEM('c', "Run hw/sw compare tests", do_compare_tests),
-        MENU_ITEM('i', "Run interactive tests", do_interactive_tests),
-        MENU_ITEM('v', "Run OPVV tests", do_opvv_tests),
         MENU_ITEM('a', "Run ADD test", do_add_test),
         MENU_ITEM('m', "Run MASK test", do_mask_logic_test),
+        MENU_ITEM('l', "Run LOAD/STORE test", do_basic_ld_st_test),
         MENU_END,
     },
 };

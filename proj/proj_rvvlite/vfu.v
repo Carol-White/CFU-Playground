@@ -17,7 +17,7 @@
 
 // MAX VLEN of 1024 because of dual port BWWE properties lol
 
-`define VLEN           8192         // vector length in bits
+`define VLEN           16384         // vector length in bits
 `define XLEN           32           // not sure, data width maybe?
 `define NUM_VEC        32           // number of available vector registers
 `define INSN_WIDTH     32           // width of a single instruction
@@ -27,7 +27,7 @@
 `define MEM_DW_B       `MEM_DATA_WIDTH/8
 `define VEX_DATA_WIDTH 32
 `define DW_B           `DATA_WIDTH/8
-`define FIFO_DEPTH_BITS 5
+`define FIFO_DEPTH_BITS 11          // the max number of packets in a full read is 2048
 
 module Vfu (
     input                           clk,

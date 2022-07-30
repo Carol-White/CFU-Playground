@@ -49,21 +49,21 @@ static struct Menu MENU = {
     "CFU Playground",
     "main",
     {
-        MENU_ITEM('1', "TfLM Models menu", models_menu),
-        MENU_ITEM('2', "Functional CFU Tests", do_functional_cfu_tests),
-        MENU_ITEM('3', "Project menu", do_proj_menu),
-        MENU_ITEM('4', "Performance Counter Tests", perf_test_menu),
-        MENU_ITEM('5', "TFLite Unit Tests", tflite_do_tests),
+        // MENU_ITEM('1', "TfLM Models menu", models_menu),
+        // MENU_ITEM('2', "Functional CFU Tests", do_functional_cfu_tests),
+        // MENU_ITEM('3', "Project menu", do_proj_menu),
+        // MENU_ITEM('4', "Performance Counter Tests", perf_test_menu),
+        // MENU_ITEM('5', "TFLite Unit Tests", tflite_do_tests),
         MENU_ITEM('6', "Benchmarks", do_benchmarks_menu),
         MENU_ITEM('7', "Util Tests", do_util_tests_menu),
 #ifdef SPIFLASH_BASE
-        MENU_ITEM('8', "SPI Flash Debugging", spiflash_menu),
+        // MENU_ITEM('8', "SPI Flash Debugging", spiflash_menu),
 #endif
 #ifdef CONFIG_CPU_DIV_UNIMPLEMENTED
-        MENU_ITEM('I', "Illegal Instruction Tests", do_instruction_tests),
+        // MENU_ITEM('I', "Illegal Instruction Tests", do_instruction_tests),
 #endif
 #ifdef CSR_VIDEO_FRAMEBUFFER_BASE
-        MENU_ITEM('9', "Framebuffer Debugging", framebuffer_menu),
+        // MENU_ITEM('9', "Framebuffer Debugging", framebuffer_menu),
 #endif
         MENU_ITEM('r', "Functional RVVLite Tests", do_functional_rvv_tests),
 #ifdef PLATFORM_sim
