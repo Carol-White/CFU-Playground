@@ -33,28 +33,41 @@ void do_basic_ld_st_test(void) {
   vsetvl_e32m4(num_elems);
 
   int32_t v0[num_elems];
-  int32_t v1[num_elems];
+  int32_t v1[num_elems], v1_ex[num_elems];
 
   vint32m4_t vA;
 
   for (int i = 0; i < num_elems; i++){
     v0[i] = (int32_t)i;
+    v1_ex[i] = v0[i];
     v1[i] = 1;
   }
 
   vA = vle32_v_i32m4(v0, num_elems);
-
   vse32_v_i32m4(v1, vA, num_elems);
 
+  // the only way to get gcc to not suck apparently
+  vA = vle32_v_i32m4(v1, num_elems);
+  vse32_v_i32m4(v1, vA, num_elems);
+
+  asm("fence iorw,rw");
+
+  asm("vl4re32.v v4, (a0)");
+
+  int err_count = 0;
   for (int i = 0; i < num_elems; i++) {
-    printf("v1: %0x. %s. Got %d, expected %d\n", &(v1[i]), (v1[i] == v0[i] ? "PASS" : "FAIL"), v1[i], v0[i]);
+    if (v1[i] != v1_ex[i]){
+      err_count++;
+      printf("v1: %0x. Got %d, expected %d\n", &(v1[i]), v1[i], v1_ex[i]);
+    }
   }
 
-  printf("Done basic ld/st test");
+  printf("Done basic ld/st test with %d errors\n", err_count);
 }
 
+
 void do_add_test(void) {
-  int num_elems = 64;
+  int num_elems = 128;
 
   vsetvl_e16m2(num_elems);
   vuint16m2_t vA, vB, vC;
@@ -79,18 +92,30 @@ void do_add_test(void) {
 
   vse16_v_u16m2(v2, vC, num_elems);
 
+  vC = vle16_v_u16m2(v2, num_elems);
+  vse16_v_u16m2(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  asm("vmv1r.v v1, v2");
+
   int err_count = 0;
   for (int i = 0; i < num_elems; i++) {
-    printf("v2: %0x. %s. Got %d, expected %d\n", &(v2[i]), (v2[i] == v2_ex[i] ? "PASS" : "FAIL"), v2[i], v2_ex[i]);
-    
-    if (v2[i] != v2_ex[i]) err_count++;
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. Got %d, expected %d\n", &(v2[i]), v2[i], v2_ex[i]);
+    }
+    // if (v2[i] != v2_ex[i]) err_count++;
   }
 
   printf("Finished ADD test with %d errors.\n", err_count);
 }
 
+// 106542340
+// 106542230
+
 void do_mask_logic_test(void) {
-  int num_elems = 2048;
+  int num_elems = 2047;
   
   vsetvl_e32m4(num_elems);
 
@@ -138,19 +163,21 @@ void do_mask_logic_test(void) {
 
   vse32_v_i32m4(v3, vA, num_elems);
 
+  asm("fence iorw,rw");
+
   int err_count = 0;
 
   for (int i = 0; i < num_elems; i++) {
     if (v2[i] != v2_ex[i]){
       err_count++;
-      printf("v2: %0x. %s. Got %d, expected %d\n", &(v2[i]), (v2[i] == v2_ex[i] ? "PASS" : "FAIL"), v2[i], v2_ex[i]);
+      printf("v2: %0x. Got %d, expected %d\n", &(v2[i]), v2[i], v2_ex[i]);
     }
   }
 
   for (int i = 0; i < num_elems; i++) {
     if (v3[i] != v3_ex[i]){
       err_count++;
-      printf("v3: %0x. %s. Got %d, expected %d\n", &(v3[i]), (v3[i] == v3_ex[i] ? "PASS" : "FAIL"), v3[i], v3_ex[i]);
+      printf("v3: %0x. Got %d, expected %d\n", &(v3[i]), v3[i], v3_ex[i]);
     }
   }
 
