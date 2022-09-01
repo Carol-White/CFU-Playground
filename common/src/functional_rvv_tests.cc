@@ -25,6 +25,8 @@
 #include "menu.h"
 #include "riscv.h"
 
+#include "perf.h"
+
 namespace {
 
 void do_basic_ld_st_test(void) {
@@ -105,6 +107,21 @@ void do_vmv_xs_test(void) {
   printf("Done vmv_xs test with %d errors\n", err_count);
 }
 
+void do_srl64_test(void) {
+  int num_elems = 128;
+
+  uint64_t v2[num_elems];
+  vuint64m8_t vA, vC;
+
+  vsetvl_e64m8(num_elems);
+
+  vA = vid_v_u64m8(num_elems);
+
+  vC = vsrl_vx_u64m8(vA, 3, num_elems);
+
+  vse64_v_u64m8(v2, vC, num_elems);
+}
+
 void do_add_test(void) {
   int num_elems = 128;
 
@@ -146,6 +163,225 @@ void do_add_test(void) {
   }
 
   printf("Finished ADD test with %d errors.\n", err_count);
+}
+
+void do_avg_add_test(void) {
+  int num_elems = 128;
+
+  vsetvl_e16m2(num_elems);
+  vuint16m2_t vA, vB, vC;
+
+  uint16_t v0[num_elems];
+  uint16_t v1[num_elems];
+  uint16_t v2[num_elems];
+  uint16_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (uint16_t)(2*i);
+    v1[i] = (uint16_t)(2*i + 4);
+    v2[i] = 1;
+
+    v2_ex[i] = (v0[i] + v1[i])/2;
+  }
+
+  vA = vle16_v_u16m2(v0, num_elems);
+  vB = vle16_v_u16m2(v1, num_elems);
+
+  vC = vaaddu_vv_u16m2(vA, vB, num_elems);
+
+  vse16_v_u16m2(v2, vC, num_elems);
+
+  vC = vle16_v_u16m2(v2, num_elems);
+  vse16_v_u16m2(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. Got %d, expected %d\n", &(v2[i]), v2[i], v2_ex[i]);
+    }
+    // if (v2[i] != v2_ex[i]) err_count++;
+  }
+
+  printf("Finished FXP ADD test with %d errors.\n", err_count);
+}
+
+void do_sra8_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e8m1(num_elems);
+  vint8m1_t vA, vB, vC;
+
+  int8_t v0[num_elems];
+  // int8_t v1[num_elems];
+  int8_t v2[num_elems];
+  int8_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (int8_t)i;
+    // v1[i] = (int8_t)i;
+    v2[i] = 1;
+
+    printf("%d,",v0[i]);
+
+    v2_ex[i] = v0[i]/8;//*v1[i];
+  }
+  printf("\n");
+
+  vA = vle8_v_i8m1(v0, num_elems);
+  // vB = vle8_v_i8m1(v1, num_elems);
+
+  vC = vsra_vx_i8m1(vA, 3, num_elems);
+
+  vse8_v_i8m1(v2, vC, num_elems);
+
+  vC = vle8_v_i8m1(v2, num_elems);
+  vse8_v_i8m1(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. Got %d, expected %d\n", &(v2[i]), v2[i], v2_ex[i]);
+    }
+  }
+  printf("Finished SRA8 test with %d errors.\n", err_count);
+}
+
+void do_srl16_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e16m1(num_elems);
+  vuint16m1_t vA, vB, vC;
+
+  uint16_t v0[num_elems];
+  // int8_t v1[num_elems];
+  uint16_t v2[num_elems];
+  uint16_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (uint16_t)i;
+    // v1[i] = (int8_t)i;
+    v2[i] = 1;
+
+    printf("%d,",v0[i]);
+
+    v2_ex[i] = v0[i]>>3;//*v1[i];
+  }
+  printf("\n");
+
+  vA = vle16_v_u16m1(v0, num_elems);
+  // vB = vle8_v_i8m1(v1, num_elems);
+
+  vC = vsrl_vx_u16m1(vA, 3, num_elems);
+
+  vse16_v_u16m1(v2, vC, num_elems);
+
+  vC = vle16_v_u16m1(v2, num_elems);
+  vse16_v_u16m1(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2[%d]: %0x. Got %d, expected %d\n", i, &(v2[i]), v2[i], v2_ex[i]);
+    }
+  }
+  printf("Finished SRL16 test with %d errors.\n", err_count);
+}
+
+void do_ssrl16_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e16m1(num_elems);
+  vuint16m1_t vA, vB, vC;
+
+  uint16_t v0[num_elems];
+  // int8_t v1[num_elems];
+  uint16_t v2[num_elems];
+  uint16_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (uint16_t)i;
+    // v1[i] = (int8_t)i;
+    v2[i] = 1;
+
+    printf("%d,",v0[i]);
+
+    v2_ex[i] = v0[i]>>3;//*v1[i];
+  }
+  printf("\n");
+
+  vA = vle16_v_u16m1(v0, num_elems);
+  // vB = vle8_v_i8m1(v1, num_elems);
+
+  vC = vssrl_vx_u16m1(vA, 3, num_elems);
+
+  vse16_v_u16m1(v2, vC, num_elems);
+
+  vC = vle16_v_u16m1(v2, num_elems);
+  vse16_v_u16m1(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2[%d]: %0x. Got %d, expected %d\n", i, &(v2[i]), v2[i], v2_ex[i]);
+    }
+  }
+  printf("Finished SSRL16 test with %d errors.\n", err_count);
+}
+
+void do_srl32_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e32m1(num_elems);
+  vuint32m1_t vA, vB, vC;
+
+  uint32_t v0[num_elems];
+  // int8_t v1[num_elems];
+  uint32_t v2[num_elems];
+  uint32_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (uint32_t)i;
+    // v1[i] = (int8_t)i;
+    v2[i] = 1;
+
+    printf("%d,",v0[i]);
+
+    v2_ex[i] = v0[i]/64;//*v1[i];
+  }
+  printf("\n");
+
+  vA = vle32_v_u32m1(v0, num_elems);
+  // vB = vle8_v_i8m1(v1, num_elems);
+
+  vC = vsrl_vx_u32m1(vA, 8, num_elems);
+
+  vse32_v_u32m1(v2, vC, num_elems);
+
+  vC = vle32_v_u32m1(v2, num_elems);
+  vse32_v_u32m1(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. Got %d, expected %d\n", &(v2[i]), v2[i], v2_ex[i]);
+    }
+  }
+  printf("Finished SRL32 test with %d errors.\n", err_count);
 }
 
 void do_mul8_test(void) {
@@ -273,6 +509,49 @@ void do_mul32_test(void) {
   printf("Finished MUL32 test with %d errors.\n", err_count);
 }
 
+void do_smul32_test(void) {
+  int num_elems = 64;
+
+  vsetvl_e32m4(num_elems);
+  vint32m4_t vA, vB, vC;
+
+  int32_t v0[num_elems];
+  int32_t v1[num_elems];
+  int32_t v2[num_elems];
+  int32_t v2_ex[num_elems];
+
+  for (int i = 0; i < num_elems; i++) {
+    v0[i] = (int32_t)(i << 16);
+    v1[i] = (int32_t)((i % 5) << 16);
+    v2[i] = 1;
+
+    v2_ex[i] = ((v0[i]>>16)*(v1[i]>>16))<<16;
+  }
+
+  vA = vle32_v_i32m4(v0, num_elems);
+  vB = vle32_v_i32m4(v1, num_elems);
+
+  vC = vsmul_vv_i32m4(vA, vB, num_elems);
+
+  vse32_v_i32m4(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  vC = vle32_v_i32m4(v2, num_elems);
+  vse32_v_i32m4(v2, vC, num_elems);
+
+  asm("fence iorw,rw");
+
+  int err_count = 0;
+  for (int i = 0; i < num_elems; i++) {
+    if (v2[i] != v2_ex[i]){
+      err_count++;
+      printf("v2: %0x. Got %x, expected %x\n", &(v2[i]), v2[i], v2_ex[i]);
+    }
+  }
+  printf("Finished SMUL32 test with %d errors.\n", err_count);
+}
+
 void do_mul_test(void) {
   do_mul8_test();
   do_mul16_test();
@@ -331,10 +610,20 @@ void do_slide_test(void) {
 // 106542340
 // 106542230
 
+void print_float(const char *name, float x)
+{
+  char m = ' ';
+  if (x < 0.0f) {
+      m = '-';
+      x = -x;
+  }
+  int i_i = (int)x;
+  float r = x - (float)(i_i);
+  printf("%s: %c%d.%03d\n", name, m, i_i, (int)(r * 1000.0f));
+}
+
 void do_mask_logic_test(void) {
   int num_elems = 2047;
-
-
   
   vsetvl_e32m4(num_elems);
 
@@ -357,7 +646,7 @@ void do_mask_logic_test(void) {
     v3[i] = 1;
   }
 
-  long start = csr_read(cycle);
+  volatile int start = perf_get_mcycle();
   for (int i = 0; i < num_elems; i++) {
     if (v1[i] <= v0[i])
       v2_ex[i] = v0[i] + v1[i];
@@ -366,9 +655,8 @@ void do_mask_logic_test(void) {
 
     v3_ex[i] = v1[i] + v2_ex[i];
   }
-  long end = csr_read(cycle);
+  volatile int end = perf_get_mcycle();
 
-  long start_v = csr_read(cycle);
   vA = vle32_v_i32m4(v0, num_elems);
   // vB = vle16_v_u16m2(v1, num_elems);
   // vA = vmv_v_x_i32m4(2, num_elems);
@@ -387,7 +675,7 @@ void do_mask_logic_test(void) {
 
   vse32_v_i32m4(v3, vA, num_elems);
 
-  long end_v = csr_read(cycle);
+  volatile int end_v = perf_get_mcycle();
 
   int a = vcpop_m_b8(vm2, num_elems);
 
@@ -414,8 +702,8 @@ void do_mask_logic_test(void) {
   printf("pop: %d\n",a);
 
   printf("time: %ld, %ld\n", start, end);
-  printf("time_v: %ld, %ld\n", start_v, end_v);
-  // printf("speedup: %f\n", ((float)(end-start)/(float)(end_v-start_v)));
+  printf("time_v: %ld, %ld\n", end, end_v);
+  print_float ("speedup", (float)(end-start)/(float)(end_v-end));
 
   printf("Finished MASK test with %d errors\n", err_count);
 }
@@ -425,11 +713,15 @@ struct Menu MENU = {
     "functional",
     {
         MENU_ITEM('a', "Run ADD test", do_add_test),
+        MENU_ITEM('v', "Run FXP AVG ADD test", do_avg_add_test),
         MENU_ITEM('m', "Run MASK test", do_mask_logic_test),
         MENU_ITEM('l', "Run LOAD/STORE test", do_basic_ld_st_test),
         MENU_ITEM('s', "Run vmv_xs test", do_vmv_xs_test),
         MENU_ITEM('u', "Run slideup test", do_slide_test),
         MENU_ITEM('*', "Run MUL test", do_mul_test),
+        MENU_ITEM('>', "Run shift right test", do_srl16_test),
+        MENU_ITEM('f', "Run scaling shift right test", do_ssrl16_test),
+        MENU_ITEM('.', "Run SMUL32 test", do_smul32_test),
         MENU_END,
     },
 };

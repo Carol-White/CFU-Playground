@@ -77,7 +77,7 @@ module Vfu (
     wire                            rvv_ready_out;
 
     rvv_proc_main #(.VLEN(`VLEN), .XLEN(`XLEN), .NUM_VEC(`NUM_VEC), .INSN_WIDTH(`INSN_WIDTH), .DATA_WIDTH(`DATA_WIDTH), .MEM_ADDR_WIDTH(`MEM_ADDR_WIDTH))
-            rvv_proc (  .clk(clk), .rst_n(~reset), .insn_in(cmd_payload_instruction), .insn_valid(cmd_valid), .proc_rdy(cmd_ready), 
+            rvv_proc (  .clk(clk), .rst_n(~reset), .insn_in(cmd_payload_instruction), .insn_valid(cmd_valid), .proc_rdy(cmd_ready), .vxrm_in(cmd_payload_rounding),
                          .mem_port_addr_out(rvv_addr_out), .mem_port_data_in(rvv_data_in), .mem_port_valid_in(rvv_valid_in), .mem_port_req_out(rvv_req_out), 
                         .mem_port_data_out(rvv_data_out),.mem_port_valid_out(rvv_valid_out), .mem_port_be_out(rvv_be_out), .mem_port_ready_out(rvv_ready_out),
                         .mem_port_done_ld(rvv_done_ld), .mem_port_done_st(rvv_done_st), .mem_port_start_out(rvv_start_out),

@@ -69,8 +69,9 @@ class VfuPlugin(val stageCount : Int,
     val decoderService = pipeline.service(classOf[DecoderService])
     decoderService.addDefault(VFU_ENABLE, False)
 
+    // load and store - unit stride only (determined by MOP)
     decoderService.add(
-      key = M"-------------------------0000111", // FIXME: some instructions don't need RS2
+      key = M"----------------000-----0-00111",
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
@@ -82,7 +83,19 @@ class VfuPlugin(val stageCount : Int,
     )
 
     decoderService.add(
-      key = M"-------------------------0100111", // FIXME: some instructions don't need RS2
+      key = M"----------------101-----0-00111",
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+
+    decoderService.add(
+      key = M"----------------11------0-00111",
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
@@ -94,8 +107,9 @@ class VfuPlugin(val stageCount : Int,
     )
 
     // config
+    // vsetvli
     decoderService.add(
-      key = M"-----------------000-----1010111", // FIXME: some instructions don't need RS2
+      key = M"----------------111-----1010111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
@@ -106,9 +120,94 @@ class VfuPlugin(val stageCount : Int,
       )
     )
 
-    // alu
+    // ALU INSNS
     decoderService.add(
-      key = M"-------------------------1010111", // FIXME: some instructions don't need RS2
+      key = M"-----------------000-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+
+    decoderService.add(
+      key = M"-----------------001-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+    
+    // vmv.x.s, vpopc, vfirst use this
+    // decoderService.add(
+    //   key = M"010000-----------010-----1010111", // 
+    //   values = List(
+    //     VFU_ENABLE -> True,
+    //     REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
+    //     BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+    //     BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+    //     RS1_USE -> True,
+    //     RS2_USE -> True
+    //   )
+    // )
+
+    decoderService.add(
+      key = M"-----------------010-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> True, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+
+    decoderService.add(
+      key = M"-----------------011-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+
+    decoderService.add(
+      key = M"-----------------100-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+
+    decoderService.add(
+      key = M"-----------------101-----1010111", // FIXME: some instructions don't need RS2
+      values = List(
+        VFU_ENABLE -> True,
+        REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
+        BYPASSABLE_EXECUTE_STAGE -> Bool(stageCount == 0),
+        BYPASSABLE_MEMORY_STAGE  -> Bool(stageCount <= 1),
+        RS1_USE -> True,
+        RS2_USE -> True
+      )
+    )
+    
+    decoderService.add(
+      key = M"-----------------110-----1010111", // FIXME: some instructions don't need RS2
       values = List(
         VFU_ENABLE -> True,
         REGFILE_WRITE_VALID      -> False, //If you want to write something back into the integer register file
@@ -140,7 +239,7 @@ class VfuPlugin(val stageCount : Int,
       arbitration.haltItself setWhen(scheduleWish && hazard)
 
       val hold = RegInit(False) setWhen(schedule) clearWhen(bus.cmd.ready)
-      val fired = RegInit(False) setWhen(bus.cmd.fire) clearWhen(!arbitration.isStuckByOthers)
+      val fired = RegInit(False) setWhen(bus.cmd.fire) clearWhen(!arbitration.isStuck)
       insert(VFU_IN_FLIGHT) := (schedule || hold || fired)
       //(if(input(REGFILE_WRITE_VALID) == True) (schedule || hold || fired) else False)
 
