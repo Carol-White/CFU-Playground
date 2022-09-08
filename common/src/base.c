@@ -66,3 +66,15 @@ uint32_t read_val(const char* prompt) {
   putchar('\n');
   return strtol(buf, NULL, 0);
 }
+
+void print_float(const char *name, float x)
+{
+  char m = ' ';
+  if (x < 0.0f) {
+      m = '-';
+      x = -x;
+  }
+  int i_i = (int)x;
+  float r = x - (float)(i_i);
+  printf("%s: %c%d.%03d\n", name, m, i_i, (int)(r * 1000.0f));
+}

@@ -610,18 +610,6 @@ void do_slide_test(void) {
 // 106542340
 // 106542230
 
-void print_float(const char *name, float x)
-{
-  char m = ' ';
-  if (x < 0.0f) {
-      m = '-';
-      x = -x;
-  }
-  int i_i = (int)x;
-  float r = x - (float)(i_i);
-  printf("%s: %c%d.%03d\n", name, m, i_i, (int)(r * 1000.0f));
-}
-
 void do_mask_logic_test(void) {
   int num_elems = 2047;
   
@@ -655,11 +643,14 @@ void do_mask_logic_test(void) {
 
     v3_ex[i] = v1[i] + v2_ex[i];
   }
+  
   volatile int end = perf_get_mcycle();
 
+  volatile int start_v = perf_get_mcycle();
   vA = vle32_v_i32m4(v0, num_elems);
   // vB = vle16_v_u16m2(v1, num_elems);
   // vA = vmv_v_x_i32m4(2, num_elems);
+  
   vB = vid_v_i32m4(num_elems);
 
   vm0 = vmsgt_vv_i32m4_b8(vB, vA, num_elems);
@@ -668,11 +659,10 @@ void do_mask_logic_test(void) {
 
   vC = vadd_vv_i32m4_m(vm2, vC, vA, vB, num_elems);
 
-  vse32_v_i32m4(v2, vC, num_elems);
-
-  vC = vle32_v_i32m4(v2, num_elems);
+  // vC = vle32_v_i32m4(v2, num_elems);
   vA = vadd_vv_i32m4(vC, vB, num_elems);
 
+  vse32_v_i32m4(v2, vC, num_elems);
   vse32_v_i32m4(v3, vA, num_elems);
 
   volatile int end_v = perf_get_mcycle();
@@ -702,8 +692,8 @@ void do_mask_logic_test(void) {
   printf("pop: %d\n",a);
 
   printf("time: %ld, %ld\n", start, end);
-  printf("time_v: %ld, %ld\n", end, end_v);
-  print_float ("speedup", (float)(end-start)/(float)(end_v-end));
+  printf("time_v: %ld, %ld\n", start_v, end_v);
+  print_float ("speedup", (float)(end-start)/(float)(end_v-start_v));
 
   printf("Finished MASK test with %d errors\n", err_count);
 }

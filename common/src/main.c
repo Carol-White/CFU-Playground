@@ -34,7 +34,7 @@
 #include "spiflash.h"
 #include "tflite_unit_tests.h"
 
-#include "rvv_bmark/mm.c"
+#include "mm.h"
 
 #ifdef PLATFORM_sim
 static void trace_sim() {
@@ -68,7 +68,7 @@ static struct Menu MENU = {
         MENU_ITEM('9', "Framebuffer Debugging", framebuffer_menu),
 #endif
         MENU_ITEM('r', "Functional RVVLite Tests", do_functional_rvv_tests),
-        MENU_ITEM('m', "RVVLite MatMul Test", rvv_mm_test),
+        MENU_ITEM('m', "RVVLite Benchmarks", rvv_bmark_test),
 #ifdef PLATFORM_sim
         MENU_ITEM('t', "trace (only works in simulation)", trace_sim),
         MENU_ITEM('Q', "Exit (only works in simulation)", exit_sim),

@@ -30,6 +30,8 @@ void init_runtime();
 // values.
 uint32_t read_val(const char* prompt);
 
+void print_float(const char *name, float x);
+
 #ifdef __cplusplus
 }
 #endif
