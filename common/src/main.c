@@ -34,7 +34,7 @@
 #include "spiflash.h"
 #include "tflite_unit_tests.h"
 
-#include "mm.h"
+#include "rvv_bmark.h"
 
 #ifdef PLATFORM_sim
 static void trace_sim() {

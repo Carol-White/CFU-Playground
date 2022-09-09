@@ -1,5 +1,5 @@
-#ifndef MM_H
-#define MM_H
+#ifndef RVV_BMARK_H
+#define RVV_BMARK_H
 
 #ifdef __cplusplus
 extern "C" {
@@ -15,7 +15,9 @@ extern "C" {
 
 // void check_mm_equal_int(int32_t* rvv_mm, int32_t* scalar_mm, int N);
 
-void rvv_mm_test();
+// void rvv_mm_test();
+
+void rvv_bmark_test();
 
 #ifdef __cplusplus
 }
