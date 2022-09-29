@@ -390,7 +390,7 @@ class VexRiscv(CPU, AutoCSR):
         )
 
         # ADD MEMORY
-        self.vfu_mbus = vfu_mbus = axi.AXILiteInterface(address_width=32, data_width=32);
+        self.vfu_mbus = vfu_mbus = axi.AXILiteInterface(address_width=32, data_width=64);
         self.memory_buses.append(vfu_mbus)
 
         self.vfu_params.update(

@@ -1,6 +1,6 @@
 // Generator : SpinalHDL v1.6.0    git head : 73c8d8e2b86b45646e9d0b2e729291f2b65e6be3
 // Component : VexRiscv
-// Git hash  : 695285bfbe57c3309daa56e73820ad1a2c87ece3
+// Git hash  : b05fc2c5494b17d10f985072714189b2fa41df24
 
 
 `define FpuOpcode_binary_sequential_type [3:0]
@@ -1396,17 +1396,17 @@ module VexRiscv (
   wire                execute_VfuPlugin_hazard;
   wire                execute_VfuPlugin_scheduleWish;
   wire                execute_VfuPlugin_schedule;
-  wire                when_VfuPlugin_l239;
+  wire                when_VfuPlugin_l226;
   reg                 execute_VfuPlugin_hold;
   reg                 execute_VfuPlugin_fired;
   wire                VfuPlugin_bus_cmd_fire;
-  wire                when_VfuPlugin_l242;
-  wire                when_VfuPlugin_l247;
+  wire                when_VfuPlugin_l229;
+  wire                when_VfuPlugin_l234;
   wire                writeBack_VfuPlugin_rsp_valid;
   reg                 writeBack_VfuPlugin_rsp_ready;
   wire       [31:0]   writeBack_VfuPlugin_rsp_payload_output;
-  wire                when_VfuPlugin_l265;
-  wire                when_VfuPlugin_l266;
+  wire                when_VfuPlugin_l252;
+  wire                when_VfuPlugin_l253;
   reg        [5:0]    FpuPlugin_pendings;
   wire                FpuPlugin_port_cmd_fire;
   wire                FpuPlugin_port_rsp_fire;
@@ -4011,7 +4011,7 @@ module VexRiscv (
         end
       endcase
     end
-    if(when_VfuPlugin_l265) begin
+    if(when_VfuPlugin_l252) begin
       _zz_decode_RS2_2 = VfuPlugin_bus_rsp_payload_output;
     end
     if(writeBack_FpuPlugin_isRsp) begin
@@ -4145,10 +4145,10 @@ module VexRiscv (
         execute_arbitration_haltItself = 1'b1;
       end
     end
-    if(when_VfuPlugin_l239) begin
+    if(when_VfuPlugin_l226) begin
       execute_arbitration_haltItself = 1'b1;
     end
-    if(when_VfuPlugin_l247) begin
+    if(when_VfuPlugin_l234) begin
       execute_arbitration_haltItself = 1'b1;
     end
   end
@@ -4217,8 +4217,8 @@ module VexRiscv (
     if(when_DBusCachedPlugin_l458) begin
       writeBack_arbitration_haltItself = 1'b1;
     end
-    if(when_VfuPlugin_l265) begin
-      if(when_VfuPlugin_l266) begin
+    if(when_VfuPlugin_l252) begin
+      if(when_VfuPlugin_l253) begin
         writeBack_arbitration_haltItself = 1'b1;
       end
     end
@@ -5840,11 +5840,11 @@ module VexRiscv (
   assign execute_VfuPlugin_hazard = ({(writeBack_arbitration_isValid && writeBack_HAS_SIDE_EFFECT),(memory_arbitration_isValid && memory_HAS_SIDE_EFFECT)} != 2'b00);
   assign execute_VfuPlugin_scheduleWish = (execute_arbitration_isValid && execute_VFU_ENABLE);
   assign execute_VfuPlugin_schedule = (execute_VfuPlugin_scheduleWish && (! execute_VfuPlugin_hazard));
-  assign when_VfuPlugin_l239 = (execute_VfuPlugin_scheduleWish && execute_VfuPlugin_hazard);
+  assign when_VfuPlugin_l226 = (execute_VfuPlugin_scheduleWish && execute_VfuPlugin_hazard);
   assign VfuPlugin_bus_cmd_fire = (VfuPlugin_bus_cmd_valid && VfuPlugin_bus_cmd_ready);
-  assign when_VfuPlugin_l242 = (! execute_arbitration_isStuck);
+  assign when_VfuPlugin_l229 = (! execute_arbitration_isStuck);
   assign VfuPlugin_bus_cmd_valid = ((execute_VfuPlugin_schedule || execute_VfuPlugin_hold) && (! execute_VfuPlugin_fired));
-  assign when_VfuPlugin_l247 = (VfuPlugin_bus_cmd_valid && (! VfuPlugin_bus_cmd_ready));
+  assign when_VfuPlugin_l234 = (VfuPlugin_bus_cmd_valid && (! VfuPlugin_bus_cmd_ready));
   assign VfuPlugin_bus_cmd_payload_instruction = execute_INSTRUCTION;
   assign VfuPlugin_bus_cmd_payload_inputs_0 = execute_RS1;
   assign VfuPlugin_bus_cmd_payload_inputs_1 = execute_RS2;
@@ -5854,13 +5854,13 @@ module VexRiscv (
   assign writeBack_VfuPlugin_rsp_payload_output = VfuPlugin_bus_rsp_payload_output;
   always @(*) begin
     writeBack_VfuPlugin_rsp_ready = 1'b0;
-    if(when_VfuPlugin_l265) begin
+    if(when_VfuPlugin_l252) begin
       writeBack_VfuPlugin_rsp_ready = (! writeBack_arbitration_isStuckByOthers);
     end
   end
 
-  assign when_VfuPlugin_l265 = (writeBack_VFU_IN_FLIGHT && writeBack_REGFILE_WRITE_VALID);
-  assign when_VfuPlugin_l266 = (! VfuPlugin_bus_rsp_valid);
+  assign when_VfuPlugin_l252 = (writeBack_VFU_IN_FLIGHT && writeBack_REGFILE_WRITE_VALID);
+  assign when_VfuPlugin_l253 = (! VfuPlugin_bus_rsp_valid);
   assign FpuPlugin_port_cmd_ready = FpuPlugin_fpu_io_port_0_cmd_ready;
   assign FpuPlugin_port_commit_ready = FpuPlugin_fpu_io_port_0_commit_ready;
   assign FpuPlugin_port_rsp_valid = FpuPlugin_fpu_io_port_0_rsp_valid;
@@ -6612,7 +6612,7 @@ module VexRiscv (
       if(VfuPlugin_bus_cmd_fire) begin
         execute_VfuPlugin_fired <= 1'b1;
       end
-      if(when_VfuPlugin_l242) begin
+      if(when_VfuPlugin_l229) begin
         execute_VfuPlugin_fired <= 1'b0;
       end
       FpuPlugin_pendings <= (_zz_FpuPlugin_pendings - _zz_FpuPlugin_pendings_6);

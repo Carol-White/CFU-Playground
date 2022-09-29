@@ -23,7 +23,7 @@
 `define INSN_WIDTH     32           // width of a single instruction
 `define DATA_WIDTH     64
 `define MEM_ADDR_WIDTH 32           // WE ONLY HAVE MEM ADDRESSES AS REGISTER IDS RIGHT NOW
-`define MEM_DATA_WIDTH 32
+`define MEM_DATA_WIDTH 64
 `define MEM_DW_B       `MEM_DATA_WIDTH/8
 `define VEX_DATA_WIDTH 32
 `define DW_B           `DATA_WIDTH/8
@@ -59,7 +59,7 @@ module Vfu (
     output                          mbus_w_valid  ,
     output  [       `MEM_DW_B-1:0]  mbus_w_strb   ,
 
-    input                           mbus_b_resp  ,
+    input   [                 1:0]  mbus_b_resp  ,
     input                           mbus_b_valid ,
     output                          mbus_b_ready
     );
@@ -83,7 +83,7 @@ module Vfu (
                         .mem_port_done_ld(rvv_done_ld), .mem_port_done_st(rvv_done_st), .mem_port_start_out(rvv_start_out),
                         .vexrv_data_in_1(cmd_payload_inputs_0), .vexrv_data_in_2(cmd_payload_inputs_1), .vexrv_data_out(rsp_payload_output), .vexrv_valid_out(rsp_valid));
 
-    mem_queue   #(.MBUS_DATA_WIDTH(`MEM_DATA_WIDTH), .MBUS_ADDR_WIDTH(`MEM_DATA_WIDTH), .FIFO_DEPTH_BITS(`FIFO_DEPTH_BITS))
+    mem_queue   #(.MBUS_DATA_WIDTH(`MEM_DATA_WIDTH), .MBUS_ADDR_WIDTH(`MEM_ADDR_WIDTH), .FIFO_DEPTH_BITS(`FIFO_DEPTH_BITS))
             mq (    .clk(clk), .rst_n(~reset),
                     .mbus_ar_ready(mbus_ar_ready), .mbus_ar_addr(mbus_ar_addr), .mbus_ar_valid(mbus_ar_valid),
                      .mbus_r_data(mbus_r_data), .mbus_r_valid (mbus_r_valid), .mbus_r_ready (mbus_r_ready),

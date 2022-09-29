@@ -30,7 +30,6 @@ VexRiscv_HpsdeltaCfu.v: $(SRC) Makefile
 VexRiscv_rvvLite.v: $(SRC) Makefile
 	sbt compile "runMain vexriscv.GenCoreDefault --dCacheSize 4096 --iCacheSize 4096 --csrPluginConfig all --rvvLite true --fpu true --outputFile VexRiscv_rvvLite"
 
-
 #================================================================================================
 #======== standard CFU models already being used in CFU Playground.   They now live here. =======
 #================================================================================================

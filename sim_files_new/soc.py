@@ -313,6 +313,7 @@ class SoCBusHandler(Module):
             converter_cls = {
                 wishbone.Interface:   wishbone.Converter,
                 axi.AXILiteInterface: axi.AXILiteConverter,
+                axi.AXIInterface:     axi.AXILiteConverter,
             }[interface_cls]
             converted_interface = interface_cls(data_width=self.data_width)
             if direction == "m2s":
@@ -340,6 +341,7 @@ class SoCBusHandler(Module):
             bridge_cls = {
                 (wishbone.Interface, axi.AXILiteInterface): axi.Wishbone2AXILite,
                 (axi.AXILiteInterface, wishbone.Interface): axi.AXILite2Wishbone,
+                (axi.AXIInterface, axi.AXILiteInterface): axi.AXI2AXILite,
             }[type(master), type(slave)]
             bridge = bridge_cls(master, slave)
             self.submodules += bridge
@@ -349,6 +351,7 @@ class SoCBusHandler(Module):
             bus_names = {
                 wishbone.Interface:   "Wishbone",
                 axi.AXILiteInterface: "AXI Lite",
+                axi.AXIInterface:     "AXI",
             }
             self.logger.info(fmt.format(
                 name      = colorer(name),

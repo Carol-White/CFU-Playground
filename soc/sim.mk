@@ -34,7 +34,7 @@ endif
 
 PROJ_DIR:=  $(CFU_ROOT)/proj/$(PROJ)
 CFU_V:=     $(if $(wildcard $(PROJ_DIR)/cfu.sv),$(PROJ_DIR)/cfu.sv,$(if $(wildcard $(PROJ_DIR)/vfu.v),$(PROJ_DIR)/vfu.v,$(PROJ_DIR)/cfu.v))
-CFU_ARGS:=  $(if $(wildcard $(PROJ_DIR)/vfu.v), --cpu-vfu, --cpu-cfu) $(CFU_V) $(if $(wildcard $(PROJ_DIR)/vfu.v), --rvv-src $(CFU_ROOT)/../src --bus-standard axi-lite, )
+CFU_ARGS:=  $(if $(wildcard $(PROJ_DIR)/vfu.v), --cpu-vfu, --cpu-cfu) $(CFU_V) $(if $(wildcard $(PROJ_DIR)/vfu.v), --rvv-src $(CFU_ROOT)/../src --bus-standard axi-lite --bus-data-width 32 --bus-address-width 32, )
 
 SOC_NAME:=  sim.$(PROJ)
 OUT_DIR:=   build/$(SOC_NAME)

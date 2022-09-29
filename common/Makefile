@@ -121,7 +121,8 @@ CXXFLAGS   := \
 	-Wall \
 	-Wextra \
 	-Wstrict-aliasing \
-	-Wno-unused-parameter
+	-Wno-unused-parameter \
+	-funroll-loops
 
 LFLAGS     := \
 	$(CXXFLAGS) \
